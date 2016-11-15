@@ -7,7 +7,6 @@ import (
 	"github.com/giskook/charging_pile_das/protocol"
 	"github.com/giskook/gotcp"
 	"log"
-	"time"
 )
 
 type Callback struct{}
@@ -38,15 +37,11 @@ func (this *Callback) OnClose(c *gotcp.Conn) {
 	log.Println(conn.NewConns())
 }
 
-func on_login(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
-	c.AsyncWritePacket(p, time.Second)
-}
-
 func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	cpd_pkg := p.(*pkg.Charging_Pile_Packet)
 	switch cpd_pkg.Type {
 	case protocol.PROTOCOL_LOGIN:
-		on_login(c, cpd_pkg)
+		event_handler_login(c, cpd_pkg)
 	}
 
 	return true

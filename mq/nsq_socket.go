@@ -7,8 +7,8 @@ import (
 
 type NsqSocket struct {
 	conf      *conf.NsqConfiguration
-	producers []*NsqProducer
-	consumers []*NsqConsumer
+	Producers []*NsqProducer
+	Consumers []*NsqConsumer
 }
 
 func NewNsqSocket(config *conf.NsqConfiguration) *NsqSocket {
@@ -16,8 +16,8 @@ func NewNsqSocket(config *conf.NsqConfiguration) *NsqSocket {
 	nsq_consumer_count := len(config.Consumer.Channels)
 	return &NsqSocket{
 		conf:      config,
-		producers: make([]*NsqProducer, nsq_producer_count),
-		consumers: make([]*NsqConsumer, nsq_consumer_count),
+		Producers: make([]*NsqProducer, nsq_producer_count),
+		Consumers: make([]*NsqConsumer, nsq_consumer_count),
 	}
 }
 
@@ -31,28 +31,32 @@ func (socket *NsqSocket) Start() {
 
 	producer := NewNsqProducer(socket.conf.Producer)
 	producer.Start()
-	socket.producers = append(socket.producers, producer)
+	socket.Producers[0] = producer
 	socket.ConsumerStart()
 }
 
 func (socket *NsqSocket) ConsumerStart() {
+	var i int = 0
 	for _, ch := range socket.conf.Consumer.Channels {
 		consumer := NewNsqConsumer(socket.conf.Consumer, ch)
 		consumer.Start()
-		socket.consumers = append(socket.consumers, consumer)
+		socket.Consumers[i] = consumer
+		i++
 	}
 }
 
 func (socket *NsqSocket) Stop() {
-	for _, producer := range socket.producers {
+	for _, producer := range socket.Producers {
 		producer.Stop()
 	}
 
-	for _, consumer := range socket.consumers {
+	for _, consumer := range socket.Consumers {
 		consumer.Stop()
 	}
 }
 
 func (socket *NsqSocket) Send(topic string, value []byte) error {
-	return socket.producers[0].Send(topic, value)
+	err := socket.Producers[0].Send(topic, value)
+
+	return err
 }

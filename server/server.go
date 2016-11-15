@@ -1,4 +1,4 @@
-package charging_pile_das
+package server
 
 import (
 	"github.com/giskook/charging_pile_das/conf"
@@ -19,7 +19,7 @@ type ServerConfig struct {
 type Server struct {
 	config           *ServerConfig
 	srv              *gotcp.Server
-	mq               *mq.NsqSocket
+	MQ               *mq.NsqSocket
 	checkconnsticker *time.Ticker
 }
 
@@ -38,13 +38,13 @@ func NewServer(srv *gotcp.Server, nsq_socket *mq.NsqSocket, config *ServerConfig
 	return &Server{
 		config:           config,
 		srv:              srv,
-		mq:               nsq_socket,
+		MQ:               nsq_socket,
 		checkconnsticker: time.NewTicker(time.Duration(serverstatistics) * time.Second),
 	}
 }
 
 func (s *Server) Start() {
-	go s.mq.Start()
+	go s.MQ.Start()
 	go s.checkStatistics()
 
 	s.srv.Start(s.config.Listener, s.config.AcceptTimeout)
@@ -53,7 +53,7 @@ func (s *Server) Start() {
 func (s *Server) Stop() {
 	s.srv.Stop()
 	s.checkconnsticker.Stop()
-	s.mq.Stop()
+	s.MQ.Stop()
 
 }
 

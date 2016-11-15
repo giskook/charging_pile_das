@@ -37,17 +37,18 @@ type Configuration struct {
 	Server *ServerConfiguration
 }
 
-var g_conf *Configuration
+var G_conf *Configuration
 
 func ReadConfig(confpath string) (*Configuration, error) {
 	file, _ := os.Open(confpath)
 	decoder := json.NewDecoder(file)
-	g_conf := &Configuration{}
-	err := decoder.Decode(g_conf)
+	config := Configuration{}
+	err := decoder.Decode(&config)
+	G_conf = &config
 
-	return g_conf, err
+	return &config, err
 }
 
 func GetConf() *Configuration {
-	return g_conf
+	return G_conf
 }

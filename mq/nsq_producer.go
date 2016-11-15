@@ -22,8 +22,12 @@ func NewNsqProducer(config *conf.ProducerConf) *NsqProducer {
 }
 
 func (s *NsqProducer) Send(topic string, value []byte) error {
-	log.Printf("<OUT_NSQ> topic %s %x \n", topic, value)
 	err := s.producer.PublishAsync(topic, value, nil, nil)
+	log.Printf("<OUT_NSQ> topic %s %x \n", topic, value)
+	if err != nil {
+		log.Println("error occur")
+		log.Println(err.Error())
+	}
 
 	return err
 }
@@ -46,6 +50,8 @@ func (s *NsqProducer) Start() {
 	if errmsg != nil {
 		//	log.Printf("create producer error" + errmsg.Error())
 		panic("create producer error " + errmsg.Error())
+	} else {
+		log.Println("producer start ok")
 	}
 }
 

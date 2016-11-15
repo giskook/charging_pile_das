@@ -115,6 +115,7 @@ func (c *Conn) checkHeart() {
 				return
 			}
 		case <-c.closeChan:
+			log.Println("recv close")
 			return
 		}
 	}

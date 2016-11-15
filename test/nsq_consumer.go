@@ -15,7 +15,7 @@ func main() {
 
 	config := nsq.NewConfig()
 
-	consumer, errmsg := nsq.NewConsumer("test_nsq", "ch2", config)
+	consumer, errmsg := nsq.NewConsumer("tms", "ch2", config)
 	consumer.AddHandler(nsq.HandlerFunc(func(message *nsq.Message) error {
 		data := message.Body
 		log.Printf("<IN_NSQ>  %s\n", data)
