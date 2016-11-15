@@ -1,0 +1,22 @@
+syntax="proto3";
+package Report;
+
+message Param {
+	enum ParaType {
+		Null   = 0x00;
+		UINT8   = 0x01;
+		UINT16  = 0x02;
+		UINT32  = 0x03;
+		UINT64  = 0x04;
+		FLOAT  = 0x10;
+		DOUBLE = 0x11;
+		STRING = 0x20;
+		BYTES  = 0x21;
+	}
+	ParaType type = 1;
+
+	uint64  npara  = 2;
+	double dpara  = 3;
+	string strpara= 4;
+	bytes  bpara  = 5;
+}
