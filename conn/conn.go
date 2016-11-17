@@ -79,7 +79,7 @@ func (c *Conn) writeToclientLoop() {
 	}
 }
 
-func (c *Conn) SendToGateway(p gotcp.Packet) {
+func (c *Conn) SendToTerm(p gotcp.Packet) {
 	//c.packetNsqReceiveChan <- p
 	c.conn.AsyncWritePacket(p, time.Second)
 }

@@ -3,6 +3,7 @@ package protocol
 import (
 	"bytes"
 	"github.com/giskook/charging_pile_das/base"
+	"log"
 )
 
 const (
@@ -10,12 +11,15 @@ const (
 	PROTOCOL_END_FLAG      byte   = 0xce
 	CHARGING_PILE_OFF_LINE byte   = 252
 	CHARGING_PILE_ON_LINE  byte   = 251
+	PROTOCOL_COMMON_LEN    uint16 = 16
 	PROTOCOL_MIN_LEN       uint16 = 16
 	PROTOCOL_MAX_LEN       uint16 = 1024
 
 	PROTOCOL_ILLEGAL   uint16 = 0
 	PROTOCOL_HALF_PACK uint16 = 255
 	PROTOCOL_LOGIN     uint16 = 1
+
+	PROTOCOL_NSQ_LOGIN uint16 = 0x8001
 )
 
 var crc_ccitt_table [256]uint16 = [256]uint16{
@@ -55,6 +59,7 @@ var crc_ccitt_table [256]uint16 = [256]uint16{
 
 func ParseHeader(buffer []byte) (*bytes.Reader, uint16, uint16, uint64) {
 	reader := bytes.NewReader(buffer)
+	reader.Seek(1, 0)
 	length := base.ReadWord(reader)
 	protocol_id := base.ReadWord(reader)
 	tid := base.ReadQuaWord(reader)
@@ -90,6 +95,7 @@ func CheckProtocol(buffer *bytes.Buffer) (uint16, uint16) {
 			return PROTOCOL_HALF_PACK, 0
 		} else {
 			crc_calc := CalcCRC(buffer.Bytes(), pkglen-3)
+			log.Printf("crc value %x\n", crc_calc)
 			if crc_calc == base.GetWord(buffer.Bytes()[pkglen-3:pkglen-1]) && buffer.Bytes()[pkglen-1] == PROTOCOL_END_FLAG {
 				protocol_id := base.GetWord(buffer.Bytes()[3:5])
 				return protocol_id, pkglen

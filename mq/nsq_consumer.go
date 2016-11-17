@@ -28,7 +28,6 @@ func NewNsqConsumer(conf *conf.ConsumerConf, ch string) *NsqConsumer {
 func (s *NsqConsumer) recvNsq() {
 	s.consumer.AddHandler(nsq.HandlerFunc(func(message *nsq.Message) error {
 		data := message.Body
-		log.Printf("<IN_NSQ>   %s  \n", data)
 		event_handler_nsq.ProcessNsq(data)
 
 		return nil

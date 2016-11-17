@@ -17,7 +17,7 @@ type LoginPacket struct {
 
 func (p *LoginPacket) Serialize() []byte {
 	command := &Report.Command{
-		Type: 1,
+		Type: Report.Command_CMT_REQ_LOGIN,
 		Uuid: p.Uuid,
 		Tid:  p.Tid,
 		Paras: []*Report.Param{
