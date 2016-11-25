@@ -40,8 +40,11 @@ func (this *Callback) OnClose(c *gotcp.Conn) {
 func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	cpd_pkg := p.(*pkg.Charging_Pile_Packet)
 	switch cpd_pkg.Type {
-	case protocol.PROTOCOL_LOGIN:
+	case protocol.PROTOCOL_REQ_LOGIN:
 		event_handler_login(c, cpd_pkg)
+	case protocol.PROTOCOL_REQ_HEART:
+		log.Println("on message")
+		event_handler_heart(c, cpd_pkg)
 	}
 
 	return true

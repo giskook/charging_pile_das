@@ -36,14 +36,19 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 		}
 
 		cmdid, pkglen := protocol.CheckProtocol(buffer)
+		log.Printf("protocol id %d\n", cmdid)
 
 		pkgbyte := make([]byte, pkglen)
 		buffer.Read(pkgbyte)
 		switch cmdid {
-		case protocol.PROTOCOL_LOGIN:
+		case protocol.PROTOCOL_REQ_LOGIN:
 			p := protocol.ParseLogin(pkgbyte)
 			smconn.ReadMore = false
-			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_LOGIN, p), nil
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_LOGIN, p), nil
+		case protocol.PROTOCOL_REQ_HEART:
+			p := protocol.ParseHeart(pkgbyte)
+			smconn.ReadMore = false
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_HEART, p), nil
 
 		case protocol.PROTOCOL_ILLEGAL:
 			smconn.ReadMore = true

@@ -1,0 +1,47 @@
+syntax="proto3";
+package Report;
+
+message ChargingPileStatus{
+	enum ChargingPileStatusType {
+		IDLE = 0;
+		CHARGING = 1;
+		TOBECHARGING = 2; 
+		FULL = 3;
+		MAINTAINACE = 4;
+	}
+	string das_uuid = 1;
+	uint64 cpid = 2;
+	ChargingPileStatusType status = 3; 
+	uint32 ChargingDuration = 4;
+	uint32 ChargingCapacity = 5;
+	uint32 ChargingPrice = 6;
+	//id
+	uint32 id = 7;
+	//所属充电站id
+	uint32 stationId = 8;
+	//终端类型id
+	uint32 terminalTypeId = 9;
+	//额定功率 单位：KW
+	double ratedPower = 10;
+	//电流类型 0：交流，1：直流 
+	uint32 electricCurrentType = 11;
+	//输入电压 单位：伏特
+	uint32 voltageInput = 12;
+	//输出电压 单位：伏特
+	uint32 voltageOutput = 13;
+	//输出电流 单位：安培
+	uint32 electricCurrentOutput = 14;
+	//枪个数
+	uint32 gunNumber = 15;
+	//电表读数
+	double ammeterNumber = 16;
+	//充电桩编码 车位号
+	uint32 code = 17;
+	//当前订单的订单号 30位（14位日期+16为cpid）
+	string currentOrderNumber = 18;
+	// 接口 0:RS232,1:RS485,2:CAN,3:USB,4:RJ45,5:RS232(DEBUG)
+	uint32 interfaceType = 19; 
+	// 波特率 0:9600,1:14400,2:19200,3:38400,4:576005,5:115200 
+	uint32	baudRate = 20;
+	uint64 Timestamp = 21;
+}

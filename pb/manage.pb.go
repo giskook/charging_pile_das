@@ -30,6 +30,8 @@ const (
 	Command_CMT_INVALID Command_CommandType = 0
 	// das->tms
 	Command_CMT_REQ_LOGIN Command_CommandType = 1
+	// das->tss
+	Command_CMT_REQ_HEART Command_CommandType = 6
 	// tms->das
 	Command_CMT_REP_LOGIN Command_CommandType = 32769
 )
@@ -37,11 +39,13 @@ const (
 var Command_CommandType_name = map[int32]string{
 	0:     "CMT_INVALID",
 	1:     "CMT_REQ_LOGIN",
+	6:     "CMT_REQ_HEART",
 	32769: "CMT_REP_LOGIN",
 }
 var Command_CommandType_value = map[string]int32{
 	"CMT_INVALID":   0,
 	"CMT_REQ_LOGIN": 1,
+	"CMT_REQ_HEART": 6,
 	"CMT_REP_LOGIN": 32769,
 }
 

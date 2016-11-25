@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/giskook/charging_pile_das/base"
 	"log"
+	"strconv"
 )
 
 const (
@@ -17,9 +18,11 @@ const (
 
 	PROTOCOL_ILLEGAL   uint16 = 0
 	PROTOCOL_HALF_PACK uint16 = 255
-	PROTOCOL_LOGIN     uint16 = 1
+	PROTOCOL_REQ_LOGIN uint16 = 1
+	PROTOCOL_REQ_HEART uint16 = 6
 
 	PROTOCOL_NSQ_LOGIN uint16 = 0x8001
+	PROTOCOL_REP_HEART uint16 = 0x8006
 )
 
 var crc_ccitt_table [256]uint16 = [256]uint16{
@@ -62,7 +65,8 @@ func ParseHeader(buffer []byte) (*bytes.Reader, uint16, uint16, uint64) {
 	reader.Seek(1, 0)
 	length := base.ReadWord(reader)
 	protocol_id := base.ReadWord(reader)
-	tid := base.ReadQuaWord(reader)
+	tid_string := base.ReadBcdString(reader, 8)
+	tid, _ := strconv.ParseUint(tid_string, 10, 64)
 
 	return reader, length, protocol_id, tid
 }

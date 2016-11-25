@@ -12,8 +12,10 @@ type Charging_Pile_Packet struct {
 
 func (this *Charging_Pile_Packet) Serialize() []byte {
 	switch this.Type {
-	case protocol.PROTOCOL_LOGIN:
+	case protocol.PROTOCOL_REQ_LOGIN:
 		return this.Packet.(*protocol.LoginPacket).Serialize()
+	case protocol.PROTOCOL_REQ_HEART:
+		return this.Packet.(*protocol.HeartPacket).Serialize()
 	}
 
 	return nil

@@ -9,6 +9,9 @@ message Command {
 
 		// das->tms
 		CMT_REQ_LOGIN           = 0x0001;
+		// das->tss
+		CMT_REQ_HEART           = 0x0006;
+
 		// tms->das
 		CMT_REP_LOGIN           = 0x8001;
 
