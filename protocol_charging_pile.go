@@ -49,6 +49,11 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			p := protocol.ParseHeart(pkgbyte)
 			smconn.ReadMore = false
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_HEART, p), nil
+		case protocol.PROTOCOL_REQ_SETTING:
+			p := protocol.ParseSetting(pkgbyte)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_SETTING, p), nil
 
 		case protocol.PROTOCOL_ILLEGAL:
 			smconn.ReadMore = true

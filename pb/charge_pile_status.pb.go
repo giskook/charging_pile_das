@@ -7,9 +7,13 @@ Package Report is a generated protocol buffer package.
 
 It is generated from these files:
 	charge_pile_status.proto
+	manage.proto
+	param.proto
 
 It has these top-level messages:
 	ChargingPileStatus
+	Command
+	Param
 */
 package Report
 

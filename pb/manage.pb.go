@@ -2,17 +2,6 @@
 // source: manage.proto
 // DO NOT EDIT!
 
-/*
-Package Report is a generated protocol buffer package.
-
-It is generated from these files:
-	manage.proto
-	param.proto
-
-It has these top-level messages:
-	Command
-	Param
-*/
 package Report
 
 import proto "github.com/golang/protobuf/proto"
@@ -28,25 +17,49 @@ type Command_CommandType int32
 
 const (
 	Command_CMT_INVALID Command_CommandType = 0
-	// das->tms
+	// das<->tms
 	Command_CMT_REQ_LOGIN Command_CommandType = 1
-	// das->tss
-	Command_CMT_REQ_HEART Command_CommandType = 6
-	// tms->das
 	Command_CMT_REP_LOGIN Command_CommandType = 32769
+	// das<->tms
+	Command_CMT_REQ_SETTING Command_CommandType = 16
+	Command_CMT_REP_SETTING Command_CommandType = 32784
+	// das->tss
+	Command_CMT_REQ_HEART            Command_CommandType = 6
+	Command_CMT_REQ_CHARGING_PREPARE Command_CommandType = 32777
+	Command_CMT_REP_CHARGING_PREPARE Command_CommandType = 9
+	Command_CMT_REQ_CHARGING         Command_CommandType = 32778
+	Command_CMT_REP_CHARGING         Command_CommandType = 10
+	Command_CMT_REQ_STOP_CHARGING    Command_CommandType = 32782
+	Command_CMT_REP_STOP_CHARGING    Command_CommandType = 14
 )
 
 var Command_CommandType_name = map[int32]string{
 	0:     "CMT_INVALID",
 	1:     "CMT_REQ_LOGIN",
-	6:     "CMT_REQ_HEART",
 	32769: "CMT_REP_LOGIN",
+	16:    "CMT_REQ_SETTING",
+	32784: "CMT_REP_SETTING",
+	6:     "CMT_REQ_HEART",
+	32777: "CMT_REQ_CHARGING_PREPARE",
+	9:     "CMT_REP_CHARGING_PREPARE",
+	32778: "CMT_REQ_CHARGING",
+	10:    "CMT_REP_CHARGING",
+	32782: "CMT_REQ_STOP_CHARGING",
+	14:    "CMT_REP_STOP_CHARGING",
 }
 var Command_CommandType_value = map[string]int32{
-	"CMT_INVALID":   0,
-	"CMT_REQ_LOGIN": 1,
-	"CMT_REQ_HEART": 6,
-	"CMT_REP_LOGIN": 32769,
+	"CMT_INVALID":              0,
+	"CMT_REQ_LOGIN":            1,
+	"CMT_REP_LOGIN":            32769,
+	"CMT_REQ_SETTING":          16,
+	"CMT_REP_SETTING":          32784,
+	"CMT_REQ_HEART":            6,
+	"CMT_REQ_CHARGING_PREPARE": 32777,
+	"CMT_REP_CHARGING_PREPARE": 9,
+	"CMT_REQ_CHARGING":         32778,
+	"CMT_REP_CHARGING":         10,
+	"CMT_REQ_STOP_CHARGING":    32782,
+	"CMT_REP_STOP_CHARGING":    14,
 }
 
 func (x Command_CommandType) String() string {

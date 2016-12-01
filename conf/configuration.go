@@ -6,10 +6,11 @@ import (
 )
 
 type ProducerConf struct {
-	Addr        string
-	Count       int
-	TopicAuth   string
-	TopicStatus string
+	Addr         string
+	Count        int
+	TopicAuth    string
+	TopicSetting string
+	TopicStatus  string
 }
 
 type ConsumerConf struct {

@@ -1,0 +1,28 @@
+{
+    "Uuid": "das1",
+    "Nsq": {
+        "Producer": {
+            "Addr": "192.168.2.67:4150",
+            "Count": 1,
+            "TopicAuth": "tms",
+	    "TopicSetting": "tms",
+            "TopicStatus": "tss"
+        },
+        "Consumer": {
+            "Addr": "192.168.2.67:4150",
+            "Topic": "das1",
+            "Channels": [
+                "das1_ch",
+                "das1_ch"
+            ]
+        }
+    },
+    "Server": {
+        "BindPort": "8877",
+        "ReadLimit": 300,
+        "WriteLimit": 30000,
+        "ConnTimeout": 300,
+        "ConnCheckInterval": 30,
+        "ServerStatistics": 300
+    }
+}

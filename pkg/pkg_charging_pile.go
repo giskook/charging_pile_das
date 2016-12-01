@@ -16,6 +16,8 @@ func (this *Charging_Pile_Packet) Serialize() []byte {
 		return this.Packet.(*protocol.LoginPacket).Serialize()
 	case protocol.PROTOCOL_REQ_HEART:
 		return this.Packet.(*protocol.HeartPacket).Serialize()
+	case protocol.PROTOCOL_REQ_SETTING:
+		return this.Packet.(*protocol.SettingPacket).Serialize()
 	}
 
 	return nil

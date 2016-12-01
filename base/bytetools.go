@@ -77,7 +77,7 @@ func WriteQuaWord(writer *bytes.Buffer, quaword uint64) {
 
 func WriteLength(writer *bytes.Buffer) {
 	length := writer.Len()
-	length += 2
+	length += 3
 	length_byte := make([]byte, 2)
 	binary.BigEndian.PutUint16(length_byte, uint16(length))
 	writer.Bytes()[1] = length_byte[0]
