@@ -6,6 +6,7 @@
             "Count": 1,
             "TopicAuth": "tms",
 	    "TopicSetting": "tms",
+	    "TopicPrice": "tms",
             "TopicStatus": "tss"
         },
         "Consumer": {

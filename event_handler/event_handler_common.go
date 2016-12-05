@@ -47,7 +47,15 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	case protocol.PROTOCOL_REQ_SETTING:
 		log.Println("on setting")
 		event_handler_setting(c, cpd_pkg)
-
+	case protocol.PROTOCOL_REQ_TIME:
+		log.Println("on time")
+		event_handler_time(c, cpd_pkg)
+	case protocol.PROTOCOL_REQ_MODE:
+		log.Println("on time")
+		event_handler_mode(c, cpd_pkg)
+	case protocol.PROTOCOL_REQ_MAX_CURRENT:
+		log.Println("on time")
+		event_handler_max_current(c, cpd_pkg)
 	}
 
 	return true

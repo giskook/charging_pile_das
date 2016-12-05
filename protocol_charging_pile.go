@@ -55,6 +55,27 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_SETTING, p), nil
 
+		case protocol.PROTOCOL_REQ_PRICE:
+			p := protocol.ParsePrice(pkgbyte)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_PRICE, p), nil
+		case protocol.PROTOCOL_REQ_TIME:
+			p := protocol.ParseTime(pkgbyte)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_TIME, p), nil
+		case protocol.PROTOCOL_REQ_MODE:
+			p := protocol.ParseMode(pkgbyte)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_MODE, p), nil
+
+		case protocol.PROTOCOL_REQ_MAX_CURRENT:
+			p := protocol.ParseMaxCurrent(pkgbyte)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_MAX_CURRENT, p), nil
 		case protocol.PROTOCOL_ILLEGAL:
 			smconn.ReadMore = true
 		case protocol.PROTOCOL_HALF_PACK:

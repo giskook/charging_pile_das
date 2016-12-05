@@ -18,6 +18,15 @@ func (this *Charging_Pile_Packet) Serialize() []byte {
 		return this.Packet.(*protocol.HeartPacket).Serialize()
 	case protocol.PROTOCOL_REQ_SETTING:
 		return this.Packet.(*protocol.SettingPacket).Serialize()
+	case protocol.PROTOCOL_REQ_PRICE:
+		return this.Packet.(*protocol.PricePacket).Serialize()
+	case protocol.PROTOCOL_REQ_TIME:
+		return this.Packet.(*protocol.TimePacket).Serialize()
+	case protocol.PROTOCOL_REQ_MODE:
+		return this.Packet.(*protocol.ModePacket).Serialize()
+	case protocol.PROTOCOL_REQ_MAX_CURRENT:
+		return this.Packet.(*protocol.MaxCurrentPacket).Serialize()
+
 	}
 
 	return nil

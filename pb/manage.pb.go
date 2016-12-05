@@ -24,7 +24,16 @@ const (
 	Command_CMT_REQ_SETTING Command_CommandType = 16
 	Command_CMT_REP_SETTING Command_CommandType = 32784
 	// das->tss
-	Command_CMT_REQ_HEART            Command_CommandType = 6
+	Command_CMT_REQ_HEART Command_CommandType = 6
+	// das<->tms
+	Command_CMT_REQ_PRICE Command_CommandType = 4
+	Command_CMT_REP_PRICE Command_CommandType = 32772
+	// das<->tms
+	Command_CMT_REQ_MODE Command_CommandType = 3
+	Command_CMT_REP_MODE Command_CommandType = 32771
+	// das<->tms
+	Command_CMT_REQ_MAX_CURRENT      Command_CommandType = 7
+	Command_CMT_REP_MAX_CURRENT      Command_CommandType = 32775
 	Command_CMT_REQ_CHARGING_PREPARE Command_CommandType = 32777
 	Command_CMT_REP_CHARGING_PREPARE Command_CommandType = 9
 	Command_CMT_REQ_CHARGING         Command_CommandType = 32778
@@ -40,6 +49,12 @@ var Command_CommandType_name = map[int32]string{
 	16:    "CMT_REQ_SETTING",
 	32784: "CMT_REP_SETTING",
 	6:     "CMT_REQ_HEART",
+	4:     "CMT_REQ_PRICE",
+	32772: "CMT_REP_PRICE",
+	3:     "CMT_REQ_MODE",
+	32771: "CMT_REP_MODE",
+	7:     "CMT_REQ_MAX_CURRENT",
+	32775: "CMT_REP_MAX_CURRENT",
 	32777: "CMT_REQ_CHARGING_PREPARE",
 	9:     "CMT_REP_CHARGING_PREPARE",
 	32778: "CMT_REQ_CHARGING",
@@ -54,6 +69,12 @@ var Command_CommandType_value = map[string]int32{
 	"CMT_REQ_SETTING":          16,
 	"CMT_REP_SETTING":          32784,
 	"CMT_REQ_HEART":            6,
+	"CMT_REQ_PRICE":            4,
+	"CMT_REP_PRICE":            32772,
+	"CMT_REQ_MODE":             3,
+	"CMT_REP_MODE":             32771,
+	"CMT_REQ_MAX_CURRENT":      7,
+	"CMT_REP_MAX_CURRENT":      32775,
 	"CMT_REQ_CHARGING_PREPARE": 32777,
 	"CMT_REP_CHARGING_PREPARE": 9,
 	"CMT_REQ_CHARGING":         32778,

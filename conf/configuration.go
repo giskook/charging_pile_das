@@ -10,6 +10,7 @@ type ProducerConf struct {
 	Count        int
 	TopicAuth    string
 	TopicSetting string
+	TopicPrice   string
 	TopicStatus  string
 }
 

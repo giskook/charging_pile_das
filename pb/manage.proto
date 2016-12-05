@@ -16,7 +16,19 @@ message Command {
 		CMT_REP_SETTING          = 0x8010; 
 
 		// das->tss
-		CMT_REQ_HEART           = 0x0006;
+		CMT_REQ_HEART            = 0x0006;
+
+		// das<->tms 
+		CMT_REQ_PRICE            = 0x0004;
+		CMT_REP_PRICE            = 0x8004;
+
+		// das<->tms
+		CMT_REQ_MODE 		 = 0x0003;
+		CMT_REP_MODE 		 = 0x8003;
+
+		// das<->tms 
+		CMT_REQ_MAX_CURRENT      = 0x0007;
+		CMT_REP_MAX_CURRENT      = 0x8007;
 
 		CMT_REQ_CHARGING_PREPARE = 0x8009; // 平台请求充电
 		CMT_REP_CHARGING_PREPARE = 0x0009; // 平台请求充电结果
