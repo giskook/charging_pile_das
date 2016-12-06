@@ -12,6 +12,7 @@ type ProducerConf struct {
 	TopicSetting string
 	TopicPrice   string
 	TopicStatus  string
+	TopicWeiXin  string
 }
 
 type ConsumerConf struct {

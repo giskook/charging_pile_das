@@ -51,11 +51,21 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 		log.Println("on time")
 		event_handler_time(c, cpd_pkg)
 	case protocol.PROTOCOL_REQ_MODE:
-		log.Println("on time")
+		log.Println("on mode")
 		event_handler_mode(c, cpd_pkg)
 	case protocol.PROTOCOL_REQ_MAX_CURRENT:
-		log.Println("on time")
+		log.Println("on max current")
 		event_handler_max_current(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_CHARGING_PREPARE:
+		log.Println("on charging prepare")
+		event_handler_rep_charging_prepare(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_CHARGING:
+		log.Println("on charging ")
+		event_handler_rep_charging(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_STOP_CHARGING:
+		log.Println("on stop charging ")
+		event_handler_rep_stop_charging(c, cpd_pkg)
+
 	}
 
 	return true

@@ -26,6 +26,12 @@ func ProcessNsq(message []byte) {
 			event_handler_rep_mode(command.Tid, command.SerialNumber, command.Paras)
 		case Report.Command_CMT_REP_MAX_CURRENT:
 			event_handler_rep_max_current(command.Tid, command.SerialNumber, command.Paras)
+		case Report.Command_CMT_REQ_CHARGING_PREPARE:
+			event_handler_req_charging_prepare(command.Tid, command.SerialNumber, command.Paras)
+		case Report.Command_CMT_REQ_CHARGING:
+			event_handler_req_charging(command.Tid, command.SerialNumber, command.Paras)
+		case Report.Command_CMT_REQ_STOP_CHARGING:
+			event_handler_req_stop_charging(command.Tid, command.SerialNumber, command.Paras)
 
 		}
 	}
