@@ -40,6 +40,9 @@ const (
 	Command_CMT_REP_CHARGING         Command_CommandType = 10
 	Command_CMT_REQ_STOP_CHARGING    Command_CommandType = 32782
 	Command_CMT_REP_STOP_CHARGING    Command_CommandType = 14
+	// web<->das
+	Command_CMT_REQ_NOTIFY_SET_PRICE Command_CommandType = 32783
+	Command_CMT_REP_NOTIFY_SET_PRICE Command_CommandType = 15
 )
 
 var Command_CommandType_name = map[int32]string{
@@ -61,6 +64,8 @@ var Command_CommandType_name = map[int32]string{
 	10:    "CMT_REP_CHARGING",
 	32782: "CMT_REQ_STOP_CHARGING",
 	14:    "CMT_REP_STOP_CHARGING",
+	32783: "CMT_REQ_NOTIFY_SET_PRICE",
+	15:    "CMT_REP_NOTIFY_SET_PRICE",
 }
 var Command_CommandType_value = map[string]int32{
 	"CMT_INVALID":              0,
@@ -81,6 +86,8 @@ var Command_CommandType_value = map[string]int32{
 	"CMT_REP_CHARGING":         10,
 	"CMT_REQ_STOP_CHARGING":    32782,
 	"CMT_REP_STOP_CHARGING":    14,
+	"CMT_REQ_NOTIFY_SET_PRICE": 32783,
+	"CMT_REP_NOTIFY_SET_PRICE": 15,
 }
 
 func (x Command_CommandType) String() string {

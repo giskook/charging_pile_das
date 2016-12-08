@@ -36,6 +36,10 @@ message Command {
 		CMT_REP_CHARGING         = 0x000a; // 平台请求开始充电结果
 		CMT_REQ_STOP_CHARGING = 0x800e; // 平台请求结束充电
 		CMT_REP_STOP_CHARGING = 0x000e; // 平台请求结束充电反馈
+
+		// web<->das
+		CMT_REQ_NOTIFY_SET_PRICE = 0x800f;
+		CMT_REP_NOTIFY_SET_PRICE = 0x000f;
 	}
 	CommandType type = 1; // 命令类型
 	string  uuid = 2; // 发起消息的服务器id

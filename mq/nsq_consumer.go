@@ -5,42 +5,37 @@ import (
 	"sync"
 
 	"github.com/bitly/go-nsq"
-	"github.com/giskook/charging_pile_das/conf"
-	"github.com/giskook/charging_pile_das/event_handler_nsq"
 )
 
-type NsqConsumer struct {
-	config    *conf.ConsumerConf
-	channel   string
-	waitGroup *sync.WaitGroup
+type NsqConsumerConf struct {
+	Addr    string
+	Topic   string
+	Channel string
 
-	consumer *nsq.Consumer
+	Handler nsq.HandlerFunc
 }
 
-func NewNsqConsumer(conf *conf.ConsumerConf, ch string) *NsqConsumer {
+type NsqConsumer struct {
+	config *NsqConsumerConf
+
+	waitGroup *sync.WaitGroup
+	consumer  *nsq.Consumer
+}
+
+func NewNsqConsumer(conf *NsqConsumerConf) *NsqConsumer {
 	return &NsqConsumer{
 		config:    conf,
-		channel:   ch,
 		waitGroup: &sync.WaitGroup{},
 	}
-}
-
-func (s *NsqConsumer) recvNsq() {
-	s.consumer.AddHandler(nsq.HandlerFunc(func(message *nsq.Message) error {
-		data := message.Body
-		event_handler_nsq.ProcessNsq(data)
-
-		return nil
-	}))
 }
 
 func (s *NsqConsumer) Start() {
 	s.waitGroup.Add(1)
 	defer func() {
 		s.waitGroup.Done()
-		err := recover()
-		if err != nil {
-			log.Println("err found")
+		errmsg := recover()
+		if errmsg != nil {
+			log.Println(errmsg)
 			s.Stop()
 		}
 
@@ -49,13 +44,13 @@ func (s *NsqConsumer) Start() {
 	config := nsq.NewConfig()
 
 	var errmsg error
-	s.consumer, errmsg = nsq.NewConsumer(s.config.Topic, s.channel, config)
+	s.consumer, errmsg = nsq.NewConsumer(s.config.Topic, s.config.Channel, config)
 
 	if errmsg != nil {
 		//	panic("create consumer error -> " + errmsg.Error())
 		log.Println("create consumer error -> " + errmsg.Error())
 	}
-	s.recvNsq()
+	s.consumer.AddHandler(s.config.Handler)
 
 	err := s.consumer.ConnectToNSQD(s.config.Addr)
 	if err != nil {

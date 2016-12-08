@@ -16,14 +16,16 @@ type ProducerConf struct {
 }
 
 type ConsumerConf struct {
-	Addr     string
+	Addr string
+
 	Topic    string
 	Channels []string
 }
 
 type NsqConfiguration struct {
-	Producer *ProducerConf
-	Consumer *ConsumerConf
+	Producer       *ProducerConf
+	Consumer       *ConsumerConf
+	ConsumerNotify *ConsumerConf
 }
 
 type ServerConfiguration struct {

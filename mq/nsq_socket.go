@@ -1,7 +1,9 @@
 package mq
 
 import (
+	"github.com/bitly/go-nsq"
 	"github.com/giskook/charging_pile_das/conf"
+	"github.com/giskook/charging_pile_das/event_handler_nsq"
 	"log"
 )
 
@@ -13,11 +15,10 @@ type NsqSocket struct {
 
 func NewNsqSocket(config *conf.NsqConfiguration) *NsqSocket {
 	nsq_producer_count := config.Producer.Count
-	nsq_consumer_count := len(config.Consumer.Channels)
 	return &NsqSocket{
 		conf:      config,
 		Producers: make([]*NsqProducer, nsq_producer_count),
-		Consumers: make([]*NsqConsumer, nsq_consumer_count),
+		Consumers: make([]*NsqConsumer, 0),
 	}
 }
 
@@ -36,12 +37,40 @@ func (socket *NsqSocket) Start() {
 }
 
 func (socket *NsqSocket) ConsumerStart() {
-	var i int = 0
 	for _, ch := range socket.conf.Consumer.Channels {
-		consumer := NewNsqConsumer(socket.conf.Consumer, ch)
+		consumer_conf := &NsqConsumerConf{
+			Addr:    socket.conf.Consumer.Addr,
+			Topic:   socket.conf.Consumer.Topic,
+			Channel: ch,
+			Handler: nsq.HandlerFunc(func(message *nsq.Message) error {
+				data := message.Body
+				event_handler_nsq.ProcessNsq(data)
+
+				return nil
+			}),
+		}
+
+		consumer := NewNsqConsumer(consumer_conf)
 		consumer.Start()
-		socket.Consumers[i] = consumer
-		i++
+		socket.Consumers = append(socket.Consumers, consumer)
+	}
+
+	for _, ch := range socket.conf.ConsumerNotify.Channels {
+		consumer_conf := &NsqConsumerConf{
+			Addr:    socket.conf.ConsumerNotify.Addr,
+			Topic:   socket.conf.ConsumerNotify.Topic,
+			Channel: ch,
+			Handler: nsq.HandlerFunc(func(message *nsq.Message) error {
+				data := message.Body
+				event_handler_nsq.ProcessNsqNotify(data)
+
+				return nil
+			}),
+		}
+
+		consumer := NewNsqConsumer(consumer_conf)
+		consumer.Start()
+		socket.Consumers = append(socket.Consumers, consumer)
 	}
 }
 

@@ -65,6 +65,9 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	case protocol.PROTOCOL_REP_STOP_CHARGING:
 		log.Println("on stop charging ")
 		event_handler_rep_stop_charging(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_NSQ_NOTIFY_SET_PRICE:
+		log.Println("on nsq notify set price")
+		event_handler_rep_notify_set_price(c, cpd_pkg)
 
 	}
 

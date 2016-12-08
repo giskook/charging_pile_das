@@ -26,6 +26,14 @@ func (this *Charging_Pile_Packet) Serialize() []byte {
 		return this.Packet.(*protocol.ModePacket).Serialize()
 	case protocol.PROTOCOL_REQ_MAX_CURRENT:
 		return this.Packet.(*protocol.MaxCurrentPacket).Serialize()
+	case protocol.PROTOCOL_REP_CHARGING_PREPARE:
+		return this.Packet.(*protocol.ChargingPreparePacket).Serialize()
+	case protocol.PROTOCOL_REP_CHARGING:
+		return this.Packet.(*protocol.ChargingPacket).Serialize()
+	case protocol.PROTOCOL_REP_STOP_CHARGING:
+		return this.Packet.(*protocol.StopChargingPacket).Serialize()
+	case protocol.PROTOCOL_REP_NSQ_NOTIFY_SET_PRICE:
+		return this.Packet.(*protocol.NotifySetPricePacket).Serialize()
 
 	}
 

@@ -18,7 +18,7 @@ func main() {
 		log.Printf("create producer error" + errmsg.Error())
 	}
 
-	err := pub.PublishAsync("test_nsq", []byte("I am puber"), nil, nil)
+	err := pub.PublishAsync("test", []byte("I am puber"), nil, nil)
 	if err != nil {
 		log.Printf("create producer error" + errmsg.Error())
 	}
