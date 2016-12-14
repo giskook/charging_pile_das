@@ -30,7 +30,7 @@
     },
     "Server": {
         "BindPort": "8877",
-        "ReadLimit": 300,
+        "ReadLimit": 30000,
         "WriteLimit": 30000,
         "ConnTimeout": 300,
         "ConnCheckInterval": 30,

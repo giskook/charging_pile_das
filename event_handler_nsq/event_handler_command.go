@@ -12,7 +12,7 @@ func ProcessNsq(message []byte) {
 	if err != nil {
 		log.Println("unmarshal error")
 	} else {
-		log.Printf("<IN NSQ> %s %x \n", command.Uuid, command.Tid)
+		log.Printf("<IN NSQ> %s %d \n", command.Uuid, command.Tid)
 		switch command.Type {
 		case Report.Command_CMT_REP_LOGIN:
 			event_handler_rep_login(command.Tid, command.SerialNumber, command.Paras)

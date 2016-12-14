@@ -15,10 +15,9 @@ type SettingNsqPacket struct {
 
 func (p *SettingNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, 0)
-	base.WriteWord(&writer, PROTOCOL_NSQ_SETTING)
-	base.WriteQuaWord(&writer, p.Tid)
+	WriteHeader(&writer, 0,
+		PROTOCOL_NSQ_SETTING, p.Tid)
+	writer.WriteByte(p.Mode)
 	if p.Mode == 1 || p.Mode == 3 {
 		writer.WriteByte(p.BaudRateOrInterfaceType)
 	} else if p.Mode == 2 {

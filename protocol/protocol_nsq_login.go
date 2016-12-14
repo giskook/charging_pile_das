@@ -15,10 +15,8 @@ type LoginNsqPacket struct {
 
 func (p *LoginNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, PROTOCOL_NSQ_LOGIN_LEN)
-	base.WriteWord(&writer, PROTOCOL_NSQ_LOGIN)
-	base.WriteQuaWord(&writer, p.Tid)
+	WriteHeader(&writer, PROTOCOL_NSQ_LOGIN_LEN,
+		PROTOCOL_NSQ_LOGIN, p.Tid)
 	writer.WriteByte(p.Result)
 	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
 	writer.WriteByte(PROTOCOL_END_FLAG)

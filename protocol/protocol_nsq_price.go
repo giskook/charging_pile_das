@@ -22,10 +22,8 @@ type PriceNsqPacket struct {
 
 func (p *PriceNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, 0)
-	base.WriteWord(&writer, PROTOCOL_REP_PRICE)
-	base.WriteQuaWord(&writer, p.Tid)
+	WriteHeader(&writer, 0,
+		PROTOCOL_REP_PRICE, p.Tid)
 	for _, price := range p.Prices {
 		writer.WriteByte(price.Start_hour)
 		writer.WriteByte(price.Start_min)

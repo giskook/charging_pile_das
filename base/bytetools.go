@@ -115,7 +115,7 @@ func ReadBcdString(reader *bytes.Reader, buffer_count uint8) string {
 func WriteBcdString(writer *bytes.Buffer, str string) {
 	str_len := len(str)
 	for i := 0; i < str_len/2; i++ {
-		writer.WriteByte(bcd_map[str[i*2:i+2]])
+		writer.WriteByte(bcd_map[str[i*2:i*2+2]])
 	}
 }
 
@@ -124,4 +124,9 @@ func ReadBcdTime(reader *bytes.Reader) uint64 {
 	bcd_time, _ := strconv.ParseUint(bcd_time_string, 10, 64)
 
 	return bcd_time
+}
+
+func WriteBcdCpid(writer *bytes.Buffer, cpid uint64) {
+	cpid_str := strconv.FormatUint(cpid, 10)
+	WriteBcdString(writer, cpid_str)
 }

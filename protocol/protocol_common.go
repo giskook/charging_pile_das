@@ -99,10 +99,17 @@ func ParseHeader(buffer []byte) (*bytes.Reader, uint16, uint16, uint64) {
 	return reader, length, protocol_id, tid
 }
 
+func WriteHeader(writer *bytes.Buffer, length uint16, cmdid uint16, cpid uint64) {
+	writer.WriteByte(PROTOCOL_START_FLAG)
+	base.WriteWord(writer, length)
+	base.WriteWord(writer, cmdid)
+	base.WriteBcdCpid(writer, cpid)
+}
+
 func CalcCRC(data []byte, size uint16) uint16 {
 	var value uint16 = 0
 	for i := uint16(0); i < size; i++ {
-		value = (value * 8) ^ crc_ccitt_table[byte((value/256))^data[i]]
+		value = (value << 8) ^ crc_ccitt_table[byte((value/256))^data[i]]
 	}
 
 	return value
@@ -126,7 +133,7 @@ func CheckProtocol(buffer *bytes.Buffer) (uint16, uint16) {
 		if int(pkglen) > bufferlen {
 			return PROTOCOL_HALF_PACK, 0
 		} else {
-			crc_calc := CalcCRC(buffer.Bytes(), pkglen-3)
+			crc_calc := CalcCRC(buffer.Bytes()[1:], pkglen-4)
 			log.Printf("crc value %x\n", crc_calc)
 			if crc_calc == base.GetWord(buffer.Bytes()[pkglen-3:pkglen-1]) && buffer.Bytes()[pkglen-1] == PROTOCOL_END_FLAG {
 				protocol_id := base.GetWord(buffer.Bytes()[3:5])

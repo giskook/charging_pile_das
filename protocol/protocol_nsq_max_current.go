@@ -15,10 +15,8 @@ type MaxCurrentNsqPacket struct {
 
 func (p *MaxCurrentNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, PROTOCOL_REP_MAX_CURRENT_LEN)
-	base.WriteWord(&writer, PROTOCOL_REP_MAX_CURRENT)
-	base.WriteQuaWord(&writer, p.Tid)
+	WriteHeader(&writer, PROTOCOL_REP_MAX_CURRENT_LEN,
+		PROTOCOL_REP_MAX_CURRENT, p.Tid)
 	writer.WriteByte(p.MaxCurrent)
 	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
 	writer.WriteByte(PROTOCOL_END_FLAG)

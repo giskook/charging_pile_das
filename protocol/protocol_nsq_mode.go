@@ -15,10 +15,8 @@ type ModeNsqPacket struct {
 
 func (p *ModeNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, PROTOCOL_REP_MODE_LEN)
-	base.WriteWord(&writer, PROTOCOL_REP_MODE)
-	base.WriteQuaWord(&writer, p.Tid)
+	WriteHeader(&writer, PROTOCOL_REP_MODE_LEN,
+		PROTOCOL_REP_MODE, p.Tid)
 	writer.WriteByte(p.Mode)
 	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
 	writer.WriteByte(PROTOCOL_END_FLAG)

@@ -15,10 +15,8 @@ type StopChargingNsqPacket struct {
 
 func (p *StopChargingNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, 0)
-	base.WriteWord(&writer, PROTOCOL_REQ_STOP_CHARGING)
-	base.WriteQuaWord(&writer, p.Tid)
+	WriteHeader(&writer, 0,
+		PROTOCOL_REQ_STOP_CHARGING, p.Tid)
 	base.WriteDWord(&writer, p.Serial)
 	writer.WriteByte(byte(len(p.Userid)))
 	base.WriteString(&writer, p.Userid)
