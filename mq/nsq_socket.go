@@ -3,7 +3,6 @@ package mq
 import (
 	"github.com/bitly/go-nsq"
 	"github.com/giskook/charging_pile_das/conf"
-	"github.com/giskook/charging_pile_das/event_handler_nsq"
 	"log"
 )
 
@@ -44,7 +43,7 @@ func (socket *NsqSocket) ConsumerStart() {
 			Channel: ch,
 			Handler: nsq.HandlerFunc(func(message *nsq.Message) error {
 				data := message.Body
-				event_handler_nsq.ProcessNsq(data)
+				ProcessNsq(socket, data)
 
 				return nil
 			}),
@@ -62,7 +61,7 @@ func (socket *NsqSocket) ConsumerStart() {
 			Channel: ch,
 			Handler: nsq.HandlerFunc(func(message *nsq.Message) error {
 				data := message.Body
-				event_handler_nsq.ProcessNsqNotify(data)
+				ProcessNsqNotify(data)
 
 				return nil
 			}),

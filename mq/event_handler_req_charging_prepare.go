@@ -1,4 +1,4 @@
-package event_handler_nsq
+package mq
 
 import (
 	"github.com/giskook/charging_pile_das/conn"
@@ -7,9 +7,9 @@ import (
 	"log"
 )
 
-func event_handler_req_stop_charging(tid uint64, serial uint32, param []*Report.Param) {
+func event_handler_req_charging_prepare(tid uint64, serial uint32, param []*Report.Param) {
 	log.Println(tid)
-	pkg := protocol.ParseNsqStopCharging(tid, serial, param)
+	pkg := protocol.ParseNsqChargingPrepare(tid, serial, param)
 	connection := conn.NewConns().GetConn(tid)
 	if connection != nil {
 		connection.SendToTerm(pkg)

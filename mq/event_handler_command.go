@@ -1,4 +1,4 @@
-package event_handler_nsq
+package mq
 
 import (
 	"github.com/giskook/charging_pile_das/pb"
@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func ProcessNsq(message []byte) {
+func ProcessNsq(socket *NsqSocket, message []byte) {
 	command := &Report.Command{}
 	err := proto.Unmarshal(message, command)
 	if err != nil {
@@ -15,7 +15,7 @@ func ProcessNsq(message []byte) {
 		log.Printf("<IN NSQ> %s %d \n", command.Uuid, command.Tid)
 		switch command.Type {
 		case Report.Command_CMT_REP_LOGIN:
-			event_handler_rep_login(command.Tid, command.SerialNumber, command.Paras)
+			event_handler_rep_login(socket, command.Tid, command.SerialNumber, command.Paras)
 			break
 		case Report.Command_CMT_REP_SETTING:
 			event_handler_rep_setting(command.Tid, command.SerialNumber, command.Paras)

@@ -21,10 +21,8 @@ type HeartPacket struct {
 
 func (p *HeartPacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, PROTOCOL_HEART_REP_LEN)
-	base.WriteWord(&writer, PROTOCOL_REP_HEART)
-	base.WriteQuaWord(&writer, p.Tid)
+	WriteHeader(&writer, PROTOCOL_HEART_REP_LEN,
+		PROTOCOL_REP_HEART, p.Tid)
 	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
 	writer.WriteByte(PROTOCOL_END_FLAG)
 

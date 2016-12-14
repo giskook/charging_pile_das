@@ -1,4 +1,4 @@
-package event_handler_nsq
+package mq
 
 import (
 	"github.com/giskook/charging_pile_das/pb"
