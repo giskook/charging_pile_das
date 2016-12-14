@@ -13,6 +13,7 @@ type LoginPacket struct {
 	Tid             uint64
 	ProtocolVersion uint8
 	HardwareVersion uint8
+	Status          uint8
 }
 
 func (p *LoginPacket) Serialize() []byte {
@@ -29,6 +30,10 @@ func (p *LoginPacket) Serialize() []byte {
 				Type:  Report.Param_UINT8,
 				Npara: uint64(p.HardwareVersion),
 			},
+			&Report.Param{
+				Type:  Report.Param_UINT8,
+				Npara: uint64(p.Status),
+			},
 		},
 	}
 
@@ -41,12 +46,14 @@ func ParseLogin(buffer []byte) *LoginPacket {
 	reader, _, _, tid := ParseHeader(buffer)
 	protocol_version, _ := reader.ReadByte()
 	hardware_version, _ := reader.ReadByte()
+	status, _ := reader.ReadByte()
 
 	return &LoginPacket{
 		Uuid:            conf.GetConf().Uuid,
 		Tid:             tid,
 		ProtocolVersion: protocol_version,
 		HardwareVersion: hardware_version,
+		Status:          status,
 	}
 
 }

@@ -29,7 +29,7 @@
         }
     },
     "Server": {
-        "BindPort": "8877",
+        "BindPort": "8876",
         "ReadLimit": 30000,
         "WriteLimit": 30000,
         "ConnTimeout": 300,
