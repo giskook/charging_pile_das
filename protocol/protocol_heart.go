@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"github.com/giskook/charging_pile_das/base"
 	"github.com/giskook/charging_pile_das/conf"
-	"github.com/giskook/charging_pile_das/pb"
-	"github.com/golang/protobuf/proto"
 )
 
 const (
@@ -29,18 +27,18 @@ func (p *HeartPacket) Serialize() []byte {
 	return writer.Bytes()
 }
 
-func (p *HeartPacket) SerializeTss() []byte {
-	status := &Report.ChargingPileStatus{
-		DasUuid:   p.Uuid,
-		Cpid:      p.Tid,
-		Status:    Report.ChargingPileStatus_ChargingPileStatusType(p.Status),
-		Timestamp: p.Timestamp,
-	}
-
-	data, _ := proto.Marshal(status)
-
-	return data
-}
+//func (p *HeartPacket) SerializeTss() []byte {
+//	status := &Report.ChargingPileStatus{
+//		DasUuid:   p.Uuid,
+//		Cpid:      p.Tid,
+//		Status:    Report.ChargingPileStatus_ChargingPileStatusType(p.Status),
+//		Timestamp: p.Timestamp,
+//	}
+//
+//	data, _ := proto.Marshal(status)
+//
+//	return data
+//}
 
 func ParseHeart(buffer []byte) *HeartPacket {
 	reader, _, _, tid := ParseHeader(buffer)

@@ -1,5 +1,5 @@
 {
-    "Uuid": "das",
+    "Uuid": "das1",
     "Nsq": {
         "Producer": {
             "Addr": "192.168.2.67:4150",
@@ -12,10 +12,10 @@
         },
         "Consumer": {
             "Addr": "192.168.2.67:4150",
-            "Topic": "das",
+            "Topic": "das1",
             "Channels": [
-                "das1_ch",
-                "das1_ch"
+                "das11_ch",
+                "das11_ch"
             ]
         },
 
@@ -23,8 +23,8 @@
             "Addr": "192.168.2.67:4150",
             "Topic": "notify",
             "Channels": [
-                "das_ch",
-                "das_ch"
+                "das1_ch",
+                "das1_ch"
             ]
         }
     },

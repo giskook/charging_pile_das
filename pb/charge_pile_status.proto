@@ -44,11 +44,9 @@ message ChargingPileStatus{
 	// 波特率 0:9600,1:14400,2:19200,3:38400,4:576005,5:115200 
 	uint32	baudRate = 20;
 	uint64 Timestamp = 21;
-	// 电表读数 0.1度
-	uint32 MeterReading = 22;
 	// 实时电流 0.1安
-	uint32 RealTimeCurrent = 23;
+	uint32 RealTimeCurrent = 22;
 	// 实时电压 1福特
-	uint32 RealTimeVoltage = 24;
+	uint32 RealTimeVoltage = 23;
 
 }

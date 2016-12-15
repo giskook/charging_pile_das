@@ -34,7 +34,10 @@ func (this *Charging_Pile_Packet) Serialize() []byte {
 		return this.Packet.(*protocol.StopChargingPacket).Serialize()
 	case protocol.PROTOCOL_REP_NSQ_NOTIFY_SET_PRICE:
 		return this.Packet.(*protocol.NotifySetPricePacket).Serialize()
-
+	case protocol.PROTOCOL_REP_CHARGING_STARTED:
+		return this.Packet.(*protocol.ChargingStartedPacket).Serialize()
+	case protocol.PROTOCOL_REP_CHARGING_UPLOAD:
+		return this.Packet.(*protocol.ChargingUploadPacket).Serialize()
 	}
 
 	return nil

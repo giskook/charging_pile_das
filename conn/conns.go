@@ -33,6 +33,11 @@ func (cs *Conns) SetID(gatewayid uint64, conn *Conn) {
 	cs.connsuid[gatewayid] = conn
 }
 
+func (cs *Conns) SetStationIDAndDbID(cpid uint64, id uint32, station_id uint32) {
+	cs.connsuid[cpid].Charging_Pile.DB_ID = id
+	cs.connsuid[cpid].Charging_Pile.Station_ID = station_id
+}
+
 func (cs *Conns) GetConn(uid uint64) *Conn {
 	return cs.connsuid[uid]
 }

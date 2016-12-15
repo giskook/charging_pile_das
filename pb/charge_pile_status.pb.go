@@ -91,6 +91,12 @@ type ChargingPileStatus struct {
 	// 波特率 0:9600,1:14400,2:19200,3:38400,4:576005,5:115200
 	BaudRate  uint32 `protobuf:"varint,20,opt,name=baudRate" json:"baudRate,omitempty"`
 	Timestamp uint64 `protobuf:"varint,21,opt,name=Timestamp" json:"Timestamp,omitempty"`
+	// 电表读数 0.1度
+	MeterReading uint32 `protobuf:"varint,22,opt,name=MeterReading" json:"MeterReading,omitempty"`
+	// 实时电流 0.1安
+	RealTimeCurrent uint32 `protobuf:"varint,23,opt,name=RealTimeCurrent" json:"RealTimeCurrent,omitempty"`
+	// 实时电压 1福特
+	RealTimeVoltage uint32 `protobuf:"varint,24,opt,name=RealTimeVoltage" json:"RealTimeVoltage,omitempty"`
 }
 
 func (m *ChargingPileStatus) Reset()         { *m = ChargingPileStatus{} }

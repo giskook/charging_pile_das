@@ -3,10 +3,12 @@ package event_handler
 import (
 	"github.com/giskook/charging_pile_das/conf"
 	"github.com/giskook/charging_pile_das/conn"
+	"github.com/giskook/charging_pile_das/pb"
 	"github.com/giskook/charging_pile_das/pkg"
 	"github.com/giskook/charging_pile_das/protocol"
 	"github.com/giskook/charging_pile_das/server"
 	"github.com/giskook/gotcp"
+	"github.com/golang/protobuf/proto"
 )
 
 func event_handler_heart(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
@@ -15,5 +17,15 @@ func event_handler_heart(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
 		connection.SendToTerm(p)
 	}
 	heart_pkg := p.Packet.(*protocol.HeartPacket)
-	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicStatus, heart_pkg.SerializeTss())
+	//server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicStatus, heart_pkg.SerializeTss())
+	status := &Report.ChargingPileStatus{
+		DasUuid:   conf.GetConf().Uuid,
+		Cpid:      connection.ID,
+		Id:        connection.Charging_Pile.DB_ID,
+		StationId: connection.Charging_Pile.Station_ID,
+		Status:    Report.ChargingPileStatus_ChargingPileStatusType(heart_pkg.Status),
+		Timestamp: heart_pkg.Timestamp,
+	}
+	data, _ := proto.Marshal(status)
+	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicStatus, data)
 }

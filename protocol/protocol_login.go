@@ -1,6 +1,7 @@
 package protocol
 
 import (
+	"github.com/giskook/charging_pile_das/base"
 	"github.com/giskook/charging_pile_das/conf"
 	"github.com/giskook/charging_pile_das/pb"
 	"github.com/golang/protobuf/proto"
@@ -14,6 +15,7 @@ type LoginPacket struct {
 	ProtocolVersion uint8
 	HardwareVersion uint8
 	Status          uint8
+	TimeStamp       uint64
 }
 
 func (p *LoginPacket) Serialize() []byte {
@@ -34,6 +36,10 @@ func (p *LoginPacket) Serialize() []byte {
 				Type:  Report.Param_UINT8,
 				Npara: uint64(p.Status),
 			},
+			&Report.Param{
+				Type:  Report.Param_UINT64,
+				Npara: p.TimeStamp,
+			},
 		},
 	}
 
@@ -47,6 +53,7 @@ func ParseLogin(buffer []byte) *LoginPacket {
 	protocol_version, _ := reader.ReadByte()
 	hardware_version, _ := reader.ReadByte()
 	status, _ := reader.ReadByte()
+	time_stamp := base.ReadBcdTime(reader)
 
 	return &LoginPacket{
 		Uuid:            conf.GetConf().Uuid,
@@ -54,6 +61,7 @@ func ParseLogin(buffer []byte) *LoginPacket {
 		ProtocolVersion: protocol_version,
 		HardwareVersion: hardware_version,
 		Status:          status,
+		TimeStamp:       time_stamp,
 	}
 
 }

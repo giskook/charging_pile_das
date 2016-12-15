@@ -99,6 +99,18 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_NSQ_NOTIFY_SET_PRICE, p), nil
 
+		case protocol.PROTOCOL_REP_CHARGING_STARTED:
+			p := protocol.ParseChargingStarted(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_STARTED, p), nil
+
+		case protocol.PROTOCOL_REP_CHARGING_UPLOAD:
+			p := protocol.ParseChargingUpload(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_UPLOAD, p), nil
+
 		case protocol.PROTOCOL_ILLEGAL:
 			smconn.ReadMore = true
 		case protocol.PROTOCOL_HALF_PACK:
