@@ -21,7 +21,7 @@ func (p *HeartPacket) Serialize() []byte {
 	var writer bytes.Buffer
 	WriteHeader(&writer, PROTOCOL_HEART_REP_LEN,
 		PROTOCOL_REP_HEART, p.Tid)
-	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
+	base.WriteWord(&writer, CalcCRC(writer.Bytes()[1:], uint16(writer.Len()-1)))
 	writer.WriteByte(PROTOCOL_END_FLAG)
 
 	return writer.Bytes()

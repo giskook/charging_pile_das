@@ -47,6 +47,7 @@ func NewConn(conn *gotcp.Conn, config *ConnConfig) *Conn {
 		index:                0,
 		Status:               ConnUnauth,
 		ReadMore:             true,
+		Charging_Pile:        &base.Charging_Pile{},
 	}
 }
 

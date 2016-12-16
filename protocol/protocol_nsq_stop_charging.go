@@ -22,7 +22,7 @@ func (p *StopChargingNsqPacket) Serialize() []byte {
 	base.WriteString(&writer, p.Userid)
 	base.WriteBcdString(&writer, p.TransactionID)
 	base.WriteLength(&writer)
-	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
+	base.WriteWord(&writer, CalcCRC(writer.Bytes()[1:], uint16(writer.Len()-1)))
 	writer.WriteByte(PROTOCOL_END_FLAG)
 
 	return writer.Bytes()

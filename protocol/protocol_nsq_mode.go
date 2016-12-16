@@ -18,7 +18,7 @@ func (p *ModeNsqPacket) Serialize() []byte {
 	WriteHeader(&writer, PROTOCOL_REP_MODE_LEN,
 		PROTOCOL_REP_MODE, p.Tid)
 	writer.WriteByte(p.Mode)
-	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
+	base.WriteWord(&writer, CalcCRC(writer.Bytes()[1:], uint16(writer.Len()-1)))
 	writer.WriteByte(PROTOCOL_END_FLAG)
 
 	return writer.Bytes()

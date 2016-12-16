@@ -12,12 +12,12 @@ import (
 func event_handler_rep_login(socket *NsqSocket, tid uint64, serial uint32, param []*Report.Param) {
 	pkg := protocol.ParseNsqLogin(tid, param)
 	connection := conn.NewConns().GetConn(tid)
+	log.Println(param)
 	if connection != nil && param[0].Npara == 0 {
 		connection.SendToTerm(pkg)
 		connection.Status = conn.ConnSuccess
 		connection.Charging_Pile.DB_ID = uint32(param[1].Npara)
 		connection.Charging_Pile.Station_ID = uint32(param[2].Npara)
-		log.Println(socket)
 		status := &Report.ChargingPileStatus{
 			DasUuid:   conf.GetConf().Uuid,
 			Cpid:      tid,
@@ -28,6 +28,7 @@ func event_handler_rep_login(socket *NsqSocket, tid uint64, serial uint32, param
 		}
 		data, _ := proto.Marshal(status)
 		socket.Send(conf.GetConf().Nsq.Producer.TopicStatus, data)
+		log.Println(param)
 	}
 
 }

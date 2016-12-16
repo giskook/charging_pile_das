@@ -18,7 +18,7 @@ func (p *LoginNsqPacket) Serialize() []byte {
 	WriteHeader(&writer, PROTOCOL_NSQ_LOGIN_LEN,
 		PROTOCOL_NSQ_LOGIN, p.Tid)
 	writer.WriteByte(p.Result)
-	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
+	base.WriteWord(&writer, CalcCRC(writer.Bytes()[1:], uint16(writer.Len()-1)))
 	writer.WriteByte(PROTOCOL_END_FLAG)
 
 	return writer.Bytes()

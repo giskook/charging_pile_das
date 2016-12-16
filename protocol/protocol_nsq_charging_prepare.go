@@ -21,7 +21,7 @@ func (p *ChargingPrepareNsqPacket) Serialize() []byte {
 	base.WriteDWord(&writer, p.Serial)
 	base.WriteWord(&writer, p.PinCode)
 	base.WriteLength(&writer)
-	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
+	base.WriteWord(&writer, CalcCRC(writer.Bytes()[1:], uint16(writer.Len()-1)))
 	writer.WriteByte(PROTOCOL_END_FLAG)
 
 	return writer.Bytes()

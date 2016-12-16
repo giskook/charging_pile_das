@@ -40,7 +40,7 @@ func (p *PriceNsqPacket) Serialize() []byte {
 	}
 	base.WriteLength(&writer)
 
-	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
+	base.WriteWord(&writer, CalcCRC(writer.Bytes()[1:], uint16(writer.Len()-1)))
 	writer.WriteByte(PROTOCOL_END_FLAG)
 
 	return writer.Bytes()
