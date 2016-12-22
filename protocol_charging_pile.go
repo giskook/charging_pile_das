@@ -84,7 +84,7 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_PREPARE, p), nil
 
 		case protocol.PROTOCOL_REP_CHARGING:
-			p := protocol.ParseCharging(pkgbyte)
+			p := protocol.ParseCharging(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID)
 			smconn.ReadMore = false
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING, p), nil

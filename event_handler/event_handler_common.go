@@ -32,6 +32,7 @@ func (this *Callback) OnConnect(c *gotcp.Conn) bool {
 
 func (this *Callback) OnClose(c *gotcp.Conn) {
 	connection := c.GetExtraData().(*conn.Conn)
+	log.Printf("close %d\n", connection.ID)
 	connection.Close()
 	conn.NewConns().Remove(connection)
 	log.Println(conn.NewConns())

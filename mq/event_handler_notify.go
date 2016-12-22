@@ -12,7 +12,7 @@ func ProcessNsqNotify(message []byte) {
 	if err != nil {
 		log.Println("unmarshal error")
 	} else {
-		log.Printf("<IN NSQ> %s %x \n", command.Uuid, command.Tid)
+		log.Printf("<IN NSQ> RECVNOTIFY %s %s \n", command.Uuid, command)
 		switch command.Type {
 		case Report.Command_CMT_REQ_NOTIFY_SET_PRICE:
 			event_handler_req_notify_set_price(command.Tid, command.SerialNumber, command.Paras)

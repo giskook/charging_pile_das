@@ -25,6 +25,8 @@ type Conn struct {
 	ticker               *time.Ticker
 	readflag             int64
 	writeflag            int64
+	chan_read            chan int64
+	chan_write           chan int64
 	packetNsqReceiveChan chan gotcp.Packet
 	closeChan            chan bool
 	index                uint32
@@ -41,6 +43,8 @@ func NewConn(conn *gotcp.Conn, config *ConnConfig) *Conn {
 		config:               config,
 		readflag:             time.Now().Unix(),
 		writeflag:            time.Now().Unix(),
+		chan_read:            make(chan int64),
+		chan_write:           make(chan int64),
 		ticker:               time.NewTicker(time.Duration(config.ConnCheckInterval) * time.Second),
 		packetNsqReceiveChan: make(chan gotcp.Packet, config.NsqChanLimit),
 		closeChan:            make(chan bool),
@@ -82,15 +86,16 @@ func (c *Conn) writeToclientLoop() {
 
 func (c *Conn) SendToTerm(p gotcp.Packet) {
 	//c.packetNsqReceiveChan <- p
+	log.Printf("<OUT> %x \n", p.Serialize())
 	c.conn.AsyncWritePacket(p, time.Second)
 }
 
 func (c *Conn) UpdateReadflag() {
-	c.readflag = time.Now().Unix()
+	c.chan_read <- time.Now().Unix()
 }
 
 func (c *Conn) UpdateWriteflag() {
-	c.writeflag = time.Now().Unix()
+	c.chan_write <- time.Now().Unix()
 }
 
 func (c *Conn) checkHeart() {
@@ -101,6 +106,10 @@ func (c *Conn) checkHeart() {
 	var now int64
 	for {
 		select {
+		case rflag := <-c.chan_read:
+			c.readflag = rflag
+		case wflag := <-c.chan_write:
+			c.writeflag = wflag
 		case <-c.ticker.C:
 			now = time.Now().Unix()
 			if now-c.readflag > int64(c.config.ReadLimit) {

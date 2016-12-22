@@ -18,7 +18,7 @@ type ChargingNsqPacket struct {
 func (p *ChargingNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
 	WriteHeader(&writer, 0,
-		PROTOCOL_REQ_CHARGING_PREPARE, p.Tid)
+		PROTOCOL_REQ_CHARGING, p.Tid)
 	base.WriteDWord(&writer, p.Serial)
 	base.WriteWord(&writer, p.PinCode)
 	writer.WriteByte(byte(len(p.Userid)))

@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/bitly/go-nsq"
+	"github.com/giskook/charging_pile_das/pb"
+	"github.com/golang/protobuf/proto"
 	"log"
 	"os"
 	"os/signal"
@@ -81,12 +83,19 @@ func main() {
 
 	config := &NsqConsumerConf{
 		Addr:    "192.168.2.67:4150",
-		Topic:   "test",
-		Channel: "test",
+		Topic:   "wxpf",
+		Channel: "zhangkai",
 		Handler: nsq.HandlerFunc(func(message *nsq.Message) error {
 			data := message.Body
 			log.Printf("<IN_NSQ>  %s\n", data)
 
+			command := &Report.Command{}
+			err := proto.Unmarshal(data, command)
+			if err != nil {
+				log.Println("unmarshal error")
+				log.Println(err)
+			}
+			log.Println(command)
 			return nil
 		}),
 	}

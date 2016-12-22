@@ -20,10 +20,8 @@ type MaxCurrentPacket struct {
 
 func (p *MaxCurrentPacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, PROTOCOL_MAX_CURRENT_REP_LEN)
-	base.WriteWord(&writer, PROTOCOL_REP_MAX_CURRENT)
-	base.WriteQuaWord(&writer, p.Tid)
+	WriteHeader(&writer, PROTOCOL_MAX_CURRENT_REP_LEN,
+		PROTOCOL_REP_MAX_CURRENT, p.Tid)
 	writer.WriteByte(p.MaxCurrent)
 	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
 	writer.WriteByte(PROTOCOL_END_FLAG)

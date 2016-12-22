@@ -11,6 +11,7 @@ type ChargingUploadPacket struct {
 	Uuid             string
 	Tid              uint64
 	UserID           string
+	TransactionID    string
 	ChargingDuration uint32
 	ChargingCapacity uint32
 	ChargingPrice    uint32
@@ -24,17 +25,18 @@ type ChargingUploadPacket struct {
 
 func (p *ChargingUploadPacket) Serialize() []byte {
 	status := &Report.ChargingPileStatus{
-		DasUuid:          p.Uuid,
-		Cpid:             p.Tid,
-		Status:           Report.ChargingPileStatus_CHARGING,
-		Timestamp:        p.Timestamp,
-		Id:               p.DBID,
-		StationId:        p.StationID,
-		ChargingDuration: p.ChargingDuration,
-		ChargingCapacity: p.ChargingCapacity,
-		ChargingPrice:    p.ChargingPrice,
-		RealTimeCurrent:  p.RealTimeCurrent,
-		RealTimeVoltage:  p.RealTimeVoltage,
+		DasUuid:            p.Uuid,
+		Cpid:               p.Tid,
+		Status:             Report.ChargingPileStatus_CHARGING,
+		Timestamp:          p.Timestamp,
+		Id:                 p.DBID,
+		StationId:          p.StationID,
+		ChargingDuration:   p.ChargingDuration,
+		ChargingCapacity:   p.ChargingCapacity,
+		ChargingPrice:      p.ChargingPrice,
+		RealTimeCurrent:    p.RealTimeCurrent,
+		RealTimeVoltage:    p.RealTimeVoltage,
+		CurrentOrderNumber: p.TransactionID,
 	}
 
 	data, _ := proto.Marshal(status)
@@ -59,7 +61,7 @@ func ParseChargingUpload(buffer []byte, station_id uint32, id uint32) *ChargingU
 	reader, _, _, tid := ParseHeader(buffer)
 	userid_len, _ := reader.ReadByte()
 	userid := base.ReadString(reader, userid_len)
-	base.ReadBcdString(reader, PROTOCOL_TRANSACTION_BCD_LEN)
+	transaction_id := base.ReadBcdString(reader, PROTOCOL_TRANSACTION_BCD_LEN)
 	charging_duration := base.ReadDWord(reader)
 	charging_capacity := base.ReadDWord(reader)
 	charging_price := base.ReadDWord(reader)
@@ -72,6 +74,7 @@ func ParseChargingUpload(buffer []byte, station_id uint32, id uint32) *ChargingU
 		Uuid:             conf.GetConf().Uuid,
 		Tid:              tid,
 		UserID:           userid,
+		TransactionID:    transaction_id,
 		ChargingDuration: charging_duration,
 		ChargingCapacity: charging_capacity,
 		ChargingPrice:    charging_price,

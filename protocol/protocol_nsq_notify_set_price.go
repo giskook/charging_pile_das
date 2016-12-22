@@ -8,6 +8,7 @@ import (
 
 type NsqNotifySetPricePacket struct {
 	Tid    uint64
+	Serial uint32
 	Prices []*Price
 	Cpids  string
 }
@@ -16,6 +17,8 @@ func (p *NsqNotifySetPricePacket) Serialize() []byte {
 	var writer bytes.Buffer
 	WriteHeader(&writer, 0,
 		PROTOCOL_REP_NSQ_NOTIFY_SET_PRICE, p.Tid)
+	base.WriteDWord(&writer, p.Serial)
+	writer.WriteByte(byte(len(p.Prices)))
 	for _, price := range p.Prices {
 		writer.WriteByte(price.Start_hour)
 		writer.WriteByte(price.Start_min)
@@ -32,7 +35,7 @@ func (p *NsqNotifySetPricePacket) Serialize() []byte {
 	return writer.Bytes()
 }
 
-func ParseNsqNotifySetPrice(cpid uint64, param []*Report.Param) *NsqNotifySetPricePacket {
+func ParseNsqNotifySetPrice(cpid uint64, serial uint32, param []*Report.Param) *NsqNotifySetPricePacket {
 	var prices []*Price
 	for i := 0; i < len(param)/6; i++ {
 		prices = append(prices, &Price{
@@ -47,6 +50,7 @@ func ParseNsqNotifySetPrice(cpid uint64, param []*Report.Param) *NsqNotifySetPri
 
 	return &NsqNotifySetPricePacket{
 		Tid:    cpid,
+		Serial: serial,
 		Prices: prices,
 	}
 }

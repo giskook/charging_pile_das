@@ -10,15 +10,18 @@ import (
 type ChargingPacket struct {
 	Uuid          string
 	Tid           uint64
+	StationID     uint32
+	DBID          uint32
 	Serial        uint32
 	Userid        string
 	TransactionID string
 	Result        uint8
+	Timestamp     uint64
 }
 
 func (p *ChargingPacket) Serialize() []byte {
 	command := &Report.Command{
-		Type: Report.Command_CMT_REP_CHARGING_PREPARE,
+		Type: Report.Command_CMT_REP_CHARGING,
 		Uuid: p.Uuid,
 		Tid:  p.Tid,
 		Paras: []*Report.Param{
@@ -42,20 +45,40 @@ func (p *ChargingPacket) Serialize() []byte {
 	return data
 }
 
-func ParseCharging(buffer []byte) *ChargingPacket {
+func (p *ChargingPacket) SerializeTss() []byte {
+	status := &Report.ChargingPileStatus{
+		DasUuid:            p.Uuid,
+		Cpid:               p.Tid,
+		Status:             Report.ChargingPileStatus_CHARGING,
+		Timestamp:          p.Timestamp,
+		Id:                 p.DBID,
+		StationId:          p.StationID,
+		CurrentOrderNumber: p.TransactionID,
+	}
+
+	data, _ := proto.Marshal(status)
+
+	return data
+}
+
+func ParseCharging(buffer []byte, station_id uint32, db_id uint32) *ChargingPacket {
 	reader, _, _, tid := ParseHeader(buffer)
 	serial := base.ReadDWord(reader)
 	userid_len, _ := reader.ReadByte()
 	userid := base.ReadString(reader, userid_len)
 	transaction_id := base.ReadBcdString(reader, PROTOCOL_TRANSACTION_BCD_LEN)
 	result, _ := reader.ReadByte()
+	_time := base.ReadBcdTime(reader)
 
 	return &ChargingPacket{
 		Uuid:          conf.GetConf().Uuid,
 		Tid:           tid,
+		StationID:     station_id,
+		DBID:          db_id,
 		Serial:        serial,
 		Userid:        userid,
 		TransactionID: transaction_id,
 		Result:        result,
+		Timestamp:     _time,
 	}
 }

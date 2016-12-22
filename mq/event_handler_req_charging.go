@@ -8,8 +8,9 @@ import (
 )
 
 func event_handler_req_charging(tid uint64, serial uint32, param []*Report.Param) {
-	log.Println(tid)
+	log.Println("event_handler_req_charging")
 	pkg := protocol.ParseNsqCharging(tid, serial, param)
+	log.Println(conn.NewConns())
 	connection := conn.NewConns().GetConn(tid)
 	if connection != nil {
 		connection.SendToTerm(pkg)

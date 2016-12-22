@@ -9,11 +9,13 @@ import (
 	"github.com/giskook/charging_pile_das/server"
 	"github.com/giskook/gotcp"
 	"github.com/golang/protobuf/proto"
+	"log"
 )
 
 func event_handler_rep_stop_charging(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
-	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeiXin, p.Serialize())
 	stop_charging_pkg := p.Packet.(*protocol.StopChargingPacket)
+	log.Println(stop_charging_pkg)
+	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeiXin, p.Serialize())
 	connection := c.GetExtraData().(*conn.Conn)
 	//server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicStatus, heart_pkg.SerializeTss())
 	status := &Report.ChargingPileStatus{

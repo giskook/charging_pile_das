@@ -93,7 +93,7 @@ func (p *StopChargingPacket) Serialize() []byte {
 		paras = append(paras, cost_paras...)
 	}
 	command := &Report.Command{
-		Type:  Report.Command_CMT_REP_CHARGING_PREPARE,
+		Type:  Report.Command_CMT_REP_STOP_CHARGING,
 		Uuid:  p.Uuid,
 		Tid:   p.Tid,
 		Paras: paras,

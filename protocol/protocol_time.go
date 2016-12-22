@@ -20,9 +20,8 @@ type TimePacket struct {
 
 func (p *TimePacket) Serialize() []byte {
 	var writer bytes.Buffer
-	writer.WriteByte(PROTOCOL_START_FLAG)
-	base.WriteWord(&writer, PROTOCOL_TIME_REP_LEN)
-	base.WriteWord(&writer, PROTOCOL_REP_TIME)
+	WriteHeader(&writer, PROTOCOL_TIME_REP_LEN,
+		PROTOCOL_REP_TIME, p.Tid)
 	base.WriteQuaWord(&writer, uint64(time.Now().Unix()))
 	base.WriteWord(&writer, CalcCRC(writer.Bytes(), uint16(writer.Len())))
 	writer.WriteByte(PROTOCOL_END_FLAG)

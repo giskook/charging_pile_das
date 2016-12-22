@@ -8,7 +8,8 @@
 	    "TopicSetting": "tms",
 	    "TopicPrice": "tms",
             "TopicStatus": "tss",
-	    "TopicWeiXin":"wxpf"
+	    "TopicWeiXin":"wxpf",
+	    "TopicNotifyResult":"tds"
         },
         "Consumer": {
             "Addr": "192.168.2.67:4150",
