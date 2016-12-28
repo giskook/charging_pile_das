@@ -5,18 +5,20 @@ import (
 	"github.com/giskook/charging_pile_das/conf"
 	"github.com/giskook/charging_pile_das/pb"
 	"github.com/golang/protobuf/proto"
+	"strconv"
 )
 
 type ChargingPacket struct {
-	Uuid          string
-	Tid           uint64
-	StationID     uint32
-	DBID          uint32
-	Serial        uint32
-	Userid        string
-	TransactionID string
-	Result        uint8
-	Timestamp     uint64
+	Uuid            string
+	Tid             uint64
+	StationID       uint32
+	DBID            uint32
+	Serial          uint32
+	Userid          string
+	TransactionID   string
+	Result          uint8
+	TimestampString string
+	Timestamp       uint64
 }
 
 func (p *ChargingPacket) Serialize() []byte {
@@ -36,6 +38,10 @@ func (p *ChargingPacket) Serialize() []byte {
 			&Report.Param{
 				Type:  Report.Param_UINT8,
 				Npara: uint64(p.Result),
+			},
+			&Report.Param{
+				Type:    Report.Param_STRING,
+				Strpara: p.TimestampString,
 			},
 		},
 	}
@@ -68,17 +74,19 @@ func ParseCharging(buffer []byte, station_id uint32, db_id uint32) *ChargingPack
 	userid := base.ReadString(reader, userid_len)
 	transaction_id := base.ReadBcdString(reader, PROTOCOL_TRANSACTION_BCD_LEN)
 	result, _ := reader.ReadByte()
-	_time := base.ReadBcdTime(reader)
+	time_stamp_string := base.ReadBcdString(reader, PROTOCOL_TIME_BCD_LEN)
+	time_stamp, _ := strconv.ParseUint(time_stamp_string, 10, 64)
 
 	return &ChargingPacket{
-		Uuid:          conf.GetConf().Uuid,
-		Tid:           tid,
-		StationID:     station_id,
-		DBID:          db_id,
-		Serial:        serial,
-		Userid:        userid,
-		TransactionID: transaction_id,
-		Result:        result,
-		Timestamp:     _time,
+		Uuid:            conf.GetConf().Uuid,
+		Tid:             tid,
+		StationID:       station_id,
+		DBID:            db_id,
+		Serial:          serial,
+		Userid:          userid,
+		TransactionID:   transaction_id,
+		Result:          result,
+		TimestampString: time_stamp_string,
+		Timestamp:       time_stamp,
 	}
 }
