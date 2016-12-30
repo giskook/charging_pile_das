@@ -115,8 +115,6 @@ func ParseStopCharging(buffer []byte) *StopChargingPacket {
 	charging_duration := base.ReadDWord(reader)
 	charging_capacity := base.ReadDWord(reader)
 	charging_cost := base.ReadDWord(reader)
-	current_time := base.ReadBcdString(reader, PROTOCOL_TIME_BCD_LEN)
-	time_stamp, _ := strconv.ParseUint(current_time, 10, 64)
 
 	var costs []*ChargingCost
 	costs_count, _ := reader.ReadByte()
@@ -133,6 +131,8 @@ func ParseStopCharging(buffer []byte) *StopChargingPacket {
 		})
 
 	}
+	current_time := base.ReadBcdString(reader, PROTOCOL_TIME_BCD_LEN)
+	time_stamp, _ := strconv.ParseUint(current_time, 10, 64)
 
 	return &StopChargingPacket{
 		Uuid:             conf.GetConf().Uuid,
