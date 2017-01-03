@@ -75,6 +75,9 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	case protocol.PROTOCOL_REP_CHARGING_UPLOAD:
 		log.Println("on charging upload")
 		event_handler_rep_charging_upload(c, cpd_pkg)
+	case protocol.PROTOCOL_REQ_PRICE:
+		log.Println("on req price")
+		event_handler_price(c, cpd_pkg)
 	}
 
 	return true

@@ -3,7 +3,7 @@ package protocol
 import (
 	"bytes"
 	"github.com/giskook/charging_pile_das/base"
-	"log"
+	//"log"
 	"strconv"
 )
 
@@ -138,7 +138,7 @@ func CheckProtocol(buffer *bytes.Buffer) (uint16, uint16) {
 			return PROTOCOL_HALF_PACK, 0
 		} else {
 			crc_calc := CalcCRC(buffer.Bytes()[1:], pkglen-4)
-			log.Printf("crc value %x\n", crc_calc)
+			//log.Printf("crc value %x\n", crc_calc)
 			if crc_calc == base.GetWord(buffer.Bytes()[pkglen-3:pkglen-1]) && buffer.Bytes()[pkglen-1] == PROTOCOL_END_FLAG {
 				protocol_id := base.GetWord(buffer.Bytes()[3:5])
 				return protocol_id, pkglen
