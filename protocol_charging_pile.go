@@ -19,11 +19,11 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 
 	buffer := smconn.GetBuffer()
 
-	conn := c.GetRawConn()
+	tcp_conn := c.GetRawConn()
 	for {
 		if smconn.ReadMore {
 			data := make([]byte, 2048)
-			readLengh, err := conn.Read(data)
+			readLengh, err := tcp_conn.Read(data)
 			log.Printf("<IN>    %x\n", data[0:readLengh])
 			if err != nil {
 				return nil, err
@@ -37,6 +37,12 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 
 		cmdid, pkglen := protocol.CheckProtocol(buffer)
 		log.Printf("protocol id %d\n", cmdid)
+		if smconn.Status == conn.ConnUnauth {
+			if cmdid != protocol.PROTOCOL_REQ_LOGIN ||
+				cmdid != protocol.PROTOCOL_HALF_PACK {
+				cmdid = protocol.PROTOCOL_SWALLOW
+			}
+		}
 
 		pkgbyte := make([]byte, pkglen)
 		buffer.Read(pkgbyte)
@@ -115,6 +121,8 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			smconn.ReadMore = true
 		case protocol.PROTOCOL_HALF_PACK:
 			smconn.ReadMore = true
+		case protocol.PROTOCOL_SWALLOW:
+			smconn.ReadMore = false
 		}
 	}
 
