@@ -38,8 +38,9 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 		cmdid, pkglen := protocol.CheckProtocol(buffer)
 		log.Printf("protocol id %d\n", cmdid)
 		if smconn.Status == conn.ConnUnauth {
-			if cmdid != protocol.PROTOCOL_REQ_LOGIN ||
-				cmdid != protocol.PROTOCOL_HALF_PACK {
+			if cmdid != protocol.PROTOCOL_REQ_LOGIN &&
+				cmdid != protocol.PROTOCOL_HALF_PACK &&
+				cmdid != protocol.PROTOCOL_ILLEGAL {
 				cmdid = protocol.PROTOCOL_SWALLOW
 			}
 		}
