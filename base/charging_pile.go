@@ -10,6 +10,8 @@ type Charging_Pile struct {
 	AuthMode        uint8
 	LockMode        uint8
 
-	UserID        string
-	TransactionID string
+	UserID            string
+	TransactionID     string
+	StartTime         uint32
+	StartMeterReading uint32
 }
