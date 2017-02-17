@@ -19,10 +19,8 @@ func (p *ChargingNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
 	WriteHeader(&writer, 0,
 		PROTOCOL_REQ_CHARGING, p.Tid)
-	base.WriteDWord(&writer, p.Serial)
-	base.WriteWord(&writer, p.PinCode)
-	writer.WriteByte(byte(len(p.Userid)))
 	base.WriteString(&writer, p.Userid)
+	base.WriteWord(&writer, p.PinCode)
 	base.WriteBcdString(&writer, p.TransactionID)
 	base.WriteDWord(&writer, p.TranscationValue)
 	base.WriteLength(&writer)

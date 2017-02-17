@@ -5,14 +5,14 @@ import (
 	"github.com/giskook/charging_pile_das/base"
 )
 
-type StopChargingNsqPacket struct {
+type ReqPinCodeNsqPacket struct {
 	Tid uint64
 }
 
-func (p *StopChargingNsqPacket) Serialize() []byte {
+func (p *ReqPinCodeNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
 	WriteHeader(&writer, 0,
-		PROTOCOL_REQ_STOP_CHARGING, p.Tid)
+		PROTOCOL_REQ_PIN, p.Tid)
 	base.WriteLength(&writer)
 	base.WriteWord(&writer, CalcCRC(writer.Bytes()[1:], uint16(writer.Len()-1)))
 	writer.WriteByte(PROTOCOL_END_FLAG)
@@ -20,8 +20,8 @@ func (p *StopChargingNsqPacket) Serialize() []byte {
 	return writer.Bytes()
 }
 
-func ParseNsqStopCharging(cpid uint64) *StopChargingNsqPacket {
-	return &StopChargingNsqPacket{
+func ParseNsqReqPinCode(cpid uint64) *ReqPinCodeNsqPacket {
+	return &ReqPinCodeNsqPacket{
 		Tid: cpid,
 	}
 }

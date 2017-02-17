@@ -22,16 +22,14 @@ func ProcessNsq(socket *NsqSocket, message []byte) {
 			break
 		case Report.Command_CMT_REP_PRICE:
 			event_handler_rep_price(command.Tid, command.SerialNumber, command.Paras)
-		case Report.Command_CMT_REP_MODE:
-			event_handler_rep_mode(command.Tid, command.SerialNumber, command.Paras)
-		case Report.Command_CMT_REP_MAX_CURRENT:
-			event_handler_rep_max_current(command.Tid, command.SerialNumber, command.Paras)
-		case Report.Command_CMT_REQ_CHARGING_PREPARE:
-			event_handler_req_charging_prepare(command.Tid, command.SerialNumber, command.Paras)
+		case Report.Command_CMT_REQ_GET_GUN_STATUS:
+			event_handler_req_gun_status(command.Tid)
 		case Report.Command_CMT_REQ_CHARGING:
 			event_handler_req_charging(command.Tid, command.SerialNumber, command.Paras)
 		case Report.Command_CMT_REQ_STOP_CHARGING:
-			event_handler_req_stop_charging(command.Tid, command.SerialNumber, command.Paras)
+			event_handler_req_stop_charging(command.Tid)
+		case Report.Command_CMT_REQ_PIN:
+			event_handler_req_pin(command.Tid)
 
 		}
 	}

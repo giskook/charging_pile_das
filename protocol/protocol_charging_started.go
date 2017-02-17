@@ -8,21 +8,24 @@ import (
 )
 
 type ChargingStartedPacket struct {
-	Uuid          string
-	Tid           uint64
-	UserID        string
-	TransactionID string
-	Timestamp     uint64
-	ElectriMeter  uint32
-	StationID     uint32
-	DBID          uint32
+	Uuid              string
+	Tid               uint64
+	StartMeterReading uint32
+	UserID            string
+	StartTime         uint32
+	PinCode           string
+	TransactionID     string
+	Timestamp         uint64
+
+	DBID      uint32
+	StationID uint32
 }
 
 func (p *ChargingStartedPacket) Serialize() []byte {
 	status := &Report.ChargingPileStatus{
 		DasUuid:   p.Uuid,
 		Cpid:      p.Tid,
-		Status:    Report.ChargingPileStatus_CHARGING,
+		Status:    uint32(PROTOCOL_CHARGING_PILE_CHARGING),
 		Timestamp: p.Timestamp,
 		Id:        p.DBID,
 		StationId: p.StationID,
@@ -33,37 +36,26 @@ func (p *ChargingStartedPacket) Serialize() []byte {
 	return data
 }
 
-//func (p *HeartPacket) SerializeTss() []byte {
-//	status := &Report.ChargingPileStatus{
-//		DasUuid:   p.Uuid,
-//		Cpid:      p.Tid,
-//		Status:    Report.ChargingPileStatus_ChargingPileStatusType(p.Status),
-//		Timestamp: p.Timestamp,
-//	}
-//
-//	data, _ := proto.Marshal(status)
-//
-//	return data
-//}
-
 func ParseChargingStarted(buffer []byte, station_id uint32, id uint32) *ChargingStartedPacket {
 	reader, _, _, tid := ParseHeader(buffer)
-	userid_len, _ := reader.ReadByte()
-	userid := base.ReadString(reader, userid_len)
+	start_meter_reading := base.ReadDWord(reader)
+	userid := base.ReadString(reader, PROTOCOL_USERID_LEN)
+	start_time := base.ReadDWord(reader)
+	pin_code := base.ReadString(reader, PROTOCOL_PINCODE_LEN)
 	transaction_id := base.ReadBcdString(reader, PROTOCOL_TRANSACTION_BCD_LEN)
-
-	_time := base.ReadBcdTime(reader)
-	electric_meter := base.ReadDWord(reader)
+	time_stamp := base.ReadBcdTime(reader)
 
 	return &ChargingStartedPacket{
-		Uuid:          conf.GetConf().Uuid,
-		Tid:           tid,
-		UserID:        userid,
-		TransactionID: transaction_id,
-		ElectriMeter:  electric_meter,
-		Timestamp:     _time,
-		DBID:          id,
-		StationID:     station_id,
+		Uuid:              conf.GetConf().Uuid,
+		Tid:               tid,
+		StartMeterReading: start_meter_reading,
+		UserID:            userid,
+		StartTime:         start_time,
+		PinCode:           pin_code,
+		TransactionID:     transaction_id,
+		Timestamp:         time_stamp,
+		DBID:              id,
+		StationID:         station_id,
 	}
 
 }

@@ -23,7 +23,7 @@ func event_handler_heart(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
 		Cpid:      connection.ID,
 		Id:        connection.Charging_Pile.DB_ID,
 		StationId: connection.Charging_Pile.Station_ID,
-		Status:    Report.ChargingPileStatus_ChargingPileStatusType(heart_pkg.Status),
+		Status:    uint32(heart_pkg.Status),
 		Timestamp: heart_pkg.Timestamp,
 	}
 	data, _ := proto.Marshal(status)

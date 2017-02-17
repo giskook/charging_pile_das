@@ -42,8 +42,10 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	cpd_pkg := p.(*pkg.Charging_Pile_Packet)
 	switch cpd_pkg.Type {
 	case protocol.PROTOCOL_REQ_LOGIN:
+		log.Println("on login")
 		event_handler_login(c, cpd_pkg)
 	case protocol.PROTOCOL_REQ_HEART:
+		log.Println("on heart")
 		event_handler_heart(c, cpd_pkg)
 	case protocol.PROTOCOL_REQ_SETTING:
 		log.Println("on setting")
@@ -51,15 +53,6 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	case protocol.PROTOCOL_REQ_TIME:
 		log.Println("on time")
 		event_handler_time(c, cpd_pkg)
-	case protocol.PROTOCOL_REQ_MODE:
-		log.Println("on mode")
-		event_handler_mode(c, cpd_pkg)
-	case protocol.PROTOCOL_REQ_MAX_CURRENT:
-		log.Println("on max current")
-		event_handler_max_current(c, cpd_pkg)
-	case protocol.PROTOCOL_REP_CHARGING_PREPARE:
-		log.Println("on charging prepare")
-		event_handler_rep_charging_prepare(c, cpd_pkg)
 	case protocol.PROTOCOL_REP_CHARGING:
 		log.Println("on charging ")
 		event_handler_rep_charging(c, cpd_pkg)
@@ -72,12 +65,24 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	case protocol.PROTOCOL_REP_CHARGING_STARTED:
 		log.Println("on charging started")
 		event_handler_rep_charging_started(c, cpd_pkg)
-	case protocol.PROTOCOL_REP_CHARGING_UPLOAD:
+	case protocol.PROTOCOL_REP_CHARGING_DATA_UPLOAD:
 		log.Println("on charging upload")
 		event_handler_rep_charging_upload(c, cpd_pkg)
 	case protocol.PROTOCOL_REQ_PRICE:
 		log.Println("on req price")
 		event_handler_price(c, cpd_pkg)
+	case protocol.PROTOCOL_REQ_THREE_PHASE_MODE:
+		log.Println("on req three phase mode")
+		event_handler_three_phase_mode(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_CHARGING_STOPPED:
+		log.Println("on rep stop charging complete")
+		event_handler_rep_charging_stopped(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_PIN:
+		log.Println("on rep pin")
+		event_handler_rep_pin(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_OFFLINE_DATA:
+		log.Println("on rep offline data")
+		event_handler_rep_offline_data(c, cpd_pkg)
 	}
 
 	return true

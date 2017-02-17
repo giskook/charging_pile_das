@@ -23,7 +23,7 @@ func event_handler_rep_stop_charging(c *gotcp.Conn, p *pkg.Charging_Pile_Packet)
 		Cpid:      connection.ID,
 		Id:        connection.Charging_Pile.DB_ID,
 		StationId: connection.Charging_Pile.Station_ID,
-		Status:    Report.ChargingPileStatus_ChargingPileStatusType(0),
+		Status:    uint32(protocol.PROTOCOL_CHARGING_PILE_IDLE),
 		Timestamp: stop_charging_pkg.Timestamp,
 	}
 	data, _ := proto.Marshal(status)

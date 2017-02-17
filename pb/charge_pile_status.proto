@@ -2,16 +2,9 @@ syntax="proto3";
 package Report;
 
 message ChargingPileStatus{
-	enum ChargingPileStatusType {
-		IDLE = 0;
-		CHARGING = 1;
-		TOBECHARGING = 2; 
-		FULL = 3;
-		MAINTAINACE = 4;
-	}
 	string das_uuid = 1;
 	uint64 cpid = 2;
-	ChargingPileStatusType status = 3; 
+	uint32 status = 3; 
 	uint32 ChargingDuration = 4;
 	uint32 ChargingCapacity = 5;
 	uint32 ChargingPrice = 6;

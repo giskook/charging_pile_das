@@ -7,6 +7,6 @@ import (
 	"github.com/giskook/gotcp"
 )
 
-func event_handler_mode(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
-	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicSetting, p.Serialize())
+func event_handler_rep_pin(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
+	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeiXin, p.Serialize())
 }

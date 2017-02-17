@@ -120,7 +120,7 @@ func WriteBcdString(writer *bytes.Buffer, str string) {
 }
 
 func ReadBcdTime(reader *bytes.Reader) uint64 {
-	bcd_time_string := ReadBcdString(reader, 7)
+	bcd_time_string := ReadBcdString(reader, 6)
 	bcd_time, _ := strconv.ParseUint(bcd_time_string, 10, 64)
 
 	return bcd_time

@@ -26,42 +26,19 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-type ChargingPileStatus_ChargingPileStatusType int32
-
-const (
-	ChargingPileStatus_IDLE         ChargingPileStatus_ChargingPileStatusType = 0
-	ChargingPileStatus_CHARGING     ChargingPileStatus_ChargingPileStatusType = 1
-	ChargingPileStatus_TOBECHARGING ChargingPileStatus_ChargingPileStatusType = 2
-	ChargingPileStatus_FULL         ChargingPileStatus_ChargingPileStatusType = 3
-	ChargingPileStatus_MAINTAINACE  ChargingPileStatus_ChargingPileStatusType = 4
-)
-
-var ChargingPileStatus_ChargingPileStatusType_name = map[int32]string{
-	0: "IDLE",
-	1: "CHARGING",
-	2: "TOBECHARGING",
-	3: "FULL",
-	4: "MAINTAINACE",
-}
-var ChargingPileStatus_ChargingPileStatusType_value = map[string]int32{
-	"IDLE":         0,
-	"CHARGING":     1,
-	"TOBECHARGING": 2,
-	"FULL":         3,
-	"MAINTAINACE":  4,
-}
-
-func (x ChargingPileStatus_ChargingPileStatusType) String() string {
-	return proto.EnumName(ChargingPileStatus_ChargingPileStatusType_name, int32(x))
-}
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type ChargingPileStatus struct {
-	DasUuid          string                                    `protobuf:"bytes,1,opt,name=das_uuid" json:"das_uuid,omitempty"`
-	Cpid             uint64                                    `protobuf:"varint,2,opt,name=cpid" json:"cpid,omitempty"`
-	Status           ChargingPileStatus_ChargingPileStatusType `protobuf:"varint,3,opt,name=status,enum=Report.ChargingPileStatus_ChargingPileStatusType" json:"status,omitempty"`
-	ChargingDuration uint32                                    `protobuf:"varint,4,opt,name=ChargingDuration" json:"ChargingDuration,omitempty"`
-	ChargingCapacity uint32                                    `protobuf:"varint,5,opt,name=ChargingCapacity" json:"ChargingCapacity,omitempty"`
-	ChargingPrice    uint32                                    `protobuf:"varint,6,opt,name=ChargingPrice" json:"ChargingPrice,omitempty"`
+	DasUuid          string `protobuf:"bytes,1,opt,name=das_uuid" json:"das_uuid,omitempty"`
+	Cpid             uint64 `protobuf:"varint,2,opt,name=cpid" json:"cpid,omitempty"`
+	Status           uint32 `protobuf:"varint,3,opt,name=status" json:"status,omitempty"`
+	ChargingDuration uint32 `protobuf:"varint,4,opt,name=ChargingDuration" json:"ChargingDuration,omitempty"`
+	ChargingCapacity uint32 `protobuf:"varint,5,opt,name=ChargingCapacity" json:"ChargingCapacity,omitempty"`
+	ChargingPrice    uint32 `protobuf:"varint,6,opt,name=ChargingPrice" json:"ChargingPrice,omitempty"`
 	// id
 	Id uint32 `protobuf:"varint,7,opt,name=id" json:"id,omitempty"`
 	// 所属充电站id
@@ -91,18 +68,207 @@ type ChargingPileStatus struct {
 	// 波特率 0:9600,1:14400,2:19200,3:38400,4:576005,5:115200
 	BaudRate  uint32 `protobuf:"varint,20,opt,name=baudRate" json:"baudRate,omitempty"`
 	Timestamp uint64 `protobuf:"varint,21,opt,name=Timestamp" json:"Timestamp,omitempty"`
-	// 电表读数 0.1度
-	MeterReading uint32 `protobuf:"varint,22,opt,name=MeterReading" json:"MeterReading,omitempty"`
 	// 实时电流 0.1安
-	RealTimeCurrent uint32 `protobuf:"varint,23,opt,name=RealTimeCurrent" json:"RealTimeCurrent,omitempty"`
+	RealTimeCurrent uint32 `protobuf:"varint,22,opt,name=RealTimeCurrent" json:"RealTimeCurrent,omitempty"`
 	// 实时电压 1福特
-	RealTimeVoltage uint32 `protobuf:"varint,24,opt,name=RealTimeVoltage" json:"RealTimeVoltage,omitempty"`
+	RealTimeVoltage uint32 `protobuf:"varint,23,opt,name=RealTimeVoltage" json:"RealTimeVoltage,omitempty"`
 }
 
-func (m *ChargingPileStatus) Reset()         { *m = ChargingPileStatus{} }
-func (m *ChargingPileStatus) String() string { return proto.CompactTextString(m) }
-func (*ChargingPileStatus) ProtoMessage()    {}
+func (m *ChargingPileStatus) Reset()                    { *m = ChargingPileStatus{} }
+func (m *ChargingPileStatus) String() string            { return proto.CompactTextString(m) }
+func (*ChargingPileStatus) ProtoMessage()               {}
+func (*ChargingPileStatus) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+
+func (m *ChargingPileStatus) GetDasUuid() string {
+	if m != nil {
+		return m.DasUuid
+	}
+	return ""
+}
+
+func (m *ChargingPileStatus) GetCpid() uint64 {
+	if m != nil {
+		return m.Cpid
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetStatus() uint32 {
+	if m != nil {
+		return m.Status
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetChargingDuration() uint32 {
+	if m != nil {
+		return m.ChargingDuration
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetChargingCapacity() uint32 {
+	if m != nil {
+		return m.ChargingCapacity
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetChargingPrice() uint32 {
+	if m != nil {
+		return m.ChargingPrice
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetId() uint32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetStationId() uint32 {
+	if m != nil {
+		return m.StationId
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetTerminalTypeId() uint32 {
+	if m != nil {
+		return m.TerminalTypeId
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetRatedPower() float64 {
+	if m != nil {
+		return m.RatedPower
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetElectricCurrentType() uint32 {
+	if m != nil {
+		return m.ElectricCurrentType
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetVoltageInput() uint32 {
+	if m != nil {
+		return m.VoltageInput
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetVoltageOutput() uint32 {
+	if m != nil {
+		return m.VoltageOutput
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetElectricCurrentOutput() uint32 {
+	if m != nil {
+		return m.ElectricCurrentOutput
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetGunNumber() uint32 {
+	if m != nil {
+		return m.GunNumber
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetAmmeterNumber() float64 {
+	if m != nil {
+		return m.AmmeterNumber
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetCode() uint32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetCurrentOrderNumber() string {
+	if m != nil {
+		return m.CurrentOrderNumber
+	}
+	return ""
+}
+
+func (m *ChargingPileStatus) GetInterfaceType() uint32 {
+	if m != nil {
+		return m.InterfaceType
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetBaudRate() uint32 {
+	if m != nil {
+		return m.BaudRate
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetTimestamp() uint64 {
+	if m != nil {
+		return m.Timestamp
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetRealTimeCurrent() uint32 {
+	if m != nil {
+		return m.RealTimeCurrent
+	}
+	return 0
+}
+
+func (m *ChargingPileStatus) GetRealTimeVoltage() uint32 {
+	if m != nil {
+		return m.RealTimeVoltage
+	}
+	return 0
+}
 
 func init() {
-	proto.RegisterEnum("Report.ChargingPileStatus_ChargingPileStatusType", ChargingPileStatus_ChargingPileStatusType_name, ChargingPileStatus_ChargingPileStatusType_value)
+	proto.RegisterType((*ChargingPileStatus)(nil), "Report.ChargingPileStatus")
+}
+
+func init() { proto.RegisterFile("charge_pile_status.proto", fileDescriptor0) }
+
+var fileDescriptor0 = []byte{
+	// 364 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x5c, 0x92, 0x41, 0x6f, 0xd3, 0x40,
+	0x10, 0x85, 0xe5, 0x12, 0x42, 0x32, 0x24, 0xa9, 0xbb, 0xad, 0xdb, 0x11, 0x08, 0xc9, 0xe2, 0xe4,
+	0x13, 0x17, 0x7e, 0x42, 0xb8, 0xe4, 0x02, 0x55, 0xa8, 0xb8, 0x46, 0x9b, 0xdd, 0xc1, 0xac, 0x64,
+	0xef, 0xae, 0xd6, 0xb3, 0xa0, 0xfe, 0x00, 0xfe, 0x37, 0xf2, 0xd4, 0xae, 0x50, 0x6f, 0xd6, 0xf7,
+	0xde, 0xbc, 0x79, 0x1e, 0x1b, 0xd0, 0xfc, 0xd2, 0xa9, 0xa5, 0x53, 0x74, 0x1d, 0x9d, 0x06, 0xd6,
+	0x9c, 0x87, 0x4f, 0x31, 0x05, 0x0e, 0x6a, 0x79, 0xa4, 0x18, 0x12, 0x7f, 0xfc, 0xbb, 0x00, 0xb5,
+	0x1f, 0x4d, 0xce, 0xb7, 0xf7, 0xae, 0xa3, 0xef, 0x62, 0x52, 0x25, 0xac, 0xac, 0x1e, 0x4e, 0x39,
+	0x3b, 0x8b, 0x45, 0x5d, 0x34, 0x6b, 0xb5, 0x81, 0x85, 0x89, 0xce, 0xe2, 0x45, 0x5d, 0x34, 0x0b,
+	0xb5, 0x83, 0xe5, 0x53, 0x1c, 0xbe, 0xaa, 0x8b, 0x66, 0xab, 0x10, 0xca, 0x39, 0xe5, 0x4b, 0x4e,
+	0x9a, 0x5d, 0xf0, 0xb8, 0x78, 0xa9, 0xec, 0x75, 0xd4, 0xc6, 0xf1, 0x23, 0xbe, 0x16, 0xa5, 0x82,
+	0xed, 0xf3, 0xe6, 0xe4, 0x0c, 0xe1, 0x52, 0x30, 0xc0, 0x85, 0xb3, 0xf8, 0x46, 0x9e, 0xaf, 0x60,
+	0x3d, 0xae, 0x71, 0xc1, 0x1f, 0x2c, 0xae, 0x04, 0xdd, 0xc2, 0x8e, 0x29, 0xf5, 0xce, 0xeb, 0xee,
+	0xe1, 0x31, 0xd2, 0xc1, 0xe2, 0x5a, 0xb8, 0x02, 0x48, 0x9a, 0xc9, 0xde, 0x87, 0x3f, 0x94, 0x10,
+	0xea, 0xa2, 0x29, 0xd4, 0x7b, 0xb8, 0xa6, 0x8e, 0x0c, 0x27, 0x67, 0xf6, 0x39, 0x25, 0xf2, 0x3c,
+	0x8e, 0xe0, 0x5b, 0x19, 0xb8, 0x81, 0xcd, 0xef, 0xd0, 0xb1, 0x6e, 0xe9, 0xe0, 0x63, 0x66, 0xdc,
+	0xcc, 0xa5, 0x26, 0xfa, 0x2d, 0xf3, 0x88, 0xb7, 0x82, 0x3f, 0x40, 0xf5, 0x22, 0x69, 0x92, 0x77,
+	0x73, 0xcf, 0x36, 0xfb, 0xaf, 0xb9, 0x3f, 0x53, 0xc2, 0xcb, 0x39, 0x48, 0xf7, 0x3d, 0x31, 0xa5,
+	0x09, 0x97, 0x52, 0x69, 0x3c, 0x63, 0xb0, 0x84, 0x57, 0x62, 0x7a, 0x07, 0xca, 0x4c, 0x71, 0xc9,
+	0x3e, 0x3b, 0x95, 0x1c, 0xbc, 0x82, 0xad, 0xf3, 0x4c, 0xe9, 0xa7, 0x36, 0x24, 0xb5, 0xaf, 0x65,
+	0xa4, 0x84, 0xd5, 0x59, 0x67, 0x7b, 0xd4, 0x4c, 0x78, 0x33, 0x2f, 0x7f, 0x70, 0x3d, 0x0d, 0xac,
+	0xfb, 0x88, 0x95, 0x7c, 0x9e, 0x3b, 0xb8, 0x3c, 0x92, 0xee, 0x46, 0x3c, 0xd5, 0xc5, 0x5b, 0xf1,
+	0xfe, 0x27, 0xfc, 0x78, 0x7a, 0x4d, 0xbc, 0x1b, 0x85, 0xf3, 0x52, 0x7e, 0x8b, 0xcf, 0xff, 0x02,
+	0x00, 0x00, 0xff, 0xff, 0x7e, 0x1d, 0xd5, 0x34, 0x32, 0x02, 0x00, 0x00,
 }

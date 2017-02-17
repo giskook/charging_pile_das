@@ -72,24 +72,6 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			smconn.ReadMore = false
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_TIME, p), nil
-		case protocol.PROTOCOL_REQ_MODE:
-			p := protocol.ParseMode(pkgbyte)
-			smconn.ReadMore = false
-
-			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_MODE, p), nil
-
-		case protocol.PROTOCOL_REQ_MAX_CURRENT:
-			p := protocol.ParseMaxCurrent(pkgbyte)
-			smconn.ReadMore = false
-
-			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_MAX_CURRENT, p), nil
-
-		case protocol.PROTOCOL_REP_CHARGING_PREPARE:
-			p := protocol.ParseChargingPrepare(pkgbyte)
-			smconn.ReadMore = false
-
-			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_PREPARE, p), nil
-
 		case protocol.PROTOCOL_REP_CHARGING:
 			p := protocol.ParseCharging(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID)
 			smconn.ReadMore = false
@@ -112,11 +94,25 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_STARTED, p), nil
 
-		case protocol.PROTOCOL_REP_CHARGING_UPLOAD:
-			p := protocol.ParseChargingUpload(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID)
+		case protocol.PROTOCOL_REP_CHARGING_DATA_UPLOAD:
+			p := protocol.ParseChargingUpload(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID, smconn.Charging_Pile.TransactionID)
 			smconn.ReadMore = false
 
-			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_UPLOAD, p), nil
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_DATA_UPLOAD, p), nil
+		case protocol.PROTOCOL_REQ_THREE_PHASE_MODE:
+			p := protocol.ParseThreePhaseMode(pkgbyte, smconn.Charging_Pile.PhaseMode, smconn.Charging_Pile.AuthMode, smconn.Charging_Pile.LockMode)
+			smconn.ReadMore = false
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_THREE_PHASE_MODE, p), nil
+		case protocol.PROTOCOL_REP_PIN:
+			p := protocol.ParseRepPin(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID)
+
+			smconn.ReadMore = false
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_PIN, p), nil
+		case protocol.PROTOCOL_REP_OFFLINE_DATA:
+			p := protocol.ParseUploadOfflineData(pkgbyte)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_OFFLINE_DATA, p), nil
 
 		case protocol.PROTOCOL_ILLEGAL:
 			smconn.ReadMore = true
