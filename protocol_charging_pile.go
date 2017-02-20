@@ -72,11 +72,6 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			smconn.ReadMore = false
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REQ_TIME, p), nil
-		case protocol.PROTOCOL_REP_CHARGING:
-			p := protocol.ParseCharging(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID)
-			smconn.ReadMore = false
-
-			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING, p), nil
 		case protocol.PROTOCOL_REP_STOP_CHARGING:
 			p := protocol.ParseStopCharging(pkgbyte)
 			smconn.ReadMore = false
@@ -113,6 +108,16 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			smconn.ReadMore = false
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_OFFLINE_DATA, p), nil
+		case protocol.PROTOCOL_REP_GUN_STATUS:
+			p := protocol.ParseRepGunStatus(pkgbyte)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_GUN_STATUS, p), nil
+		case protocol.PROTOCOL_REP_CHARGING:
+			p := protocol.ParseRepCharging(pkgbyte)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING, p), nil
 
 		case protocol.PROTOCOL_ILLEGAL:
 			smconn.ReadMore = true

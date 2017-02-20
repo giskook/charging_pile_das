@@ -23,17 +23,41 @@ type ChargingStartedPacket struct {
 
 func (p *ChargingStartedPacket) Serialize() []byte {
 	status := &Report.ChargingPileStatus{
-		DasUuid:   p.Uuid,
-		Cpid:      p.Tid,
-		Status:    uint32(PROTOCOL_CHARGING_PILE_CHARGING),
-		Timestamp: p.Timestamp,
-		Id:        p.DBID,
-		StationId: p.StationID,
+		DasUuid:       p.Uuid,
+		Cpid:          p.Tid,
+		Status:        uint32(PROTOCOL_CHARGING_PILE_CHARGING),
+		AmmeterNumber: p.StartMeterReading,
+		Timestamp:     p.Timestamp,
+		Id:            p.DBID,
+		StationId:     p.StationID,
 	}
 
 	data, _ := proto.Marshal(status)
 
 	return data
+}
+
+func (p *ChargingStartedPacket) SerializeWeChat() []byte {
+	command := &Report.Command{
+		Type: Report.Command_CMT_REP_CHARGING_STARTED,
+		Uuid: p.Uuid,
+		Tid:  p.Tid,
+		Paras: []*Report.Param{
+			&Report.Param{
+				Type:    Report.Param_STRING,
+				Strpara: p.UserID,
+			},
+			&Report.Param{
+				Type:    Report.Param_STRING,
+				Strpara: p.TransactionID,
+			},
+		},
+	}
+
+	data, _ := proto.Marshal(command)
+
+	return data
+
 }
 
 func ParseChargingStarted(buffer []byte, station_id uint32, id uint32) *ChargingStartedPacket {

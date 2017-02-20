@@ -83,6 +83,9 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	case protocol.PROTOCOL_REP_OFFLINE_DATA:
 		log.Println("on rep offline data")
 		event_handler_rep_offline_data(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_GUN_STATUS:
+		log.Println("on rep gun status")
+		event_handler_rep_gun_status(c, cpd_pkg)
 	}
 
 	return true

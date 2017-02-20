@@ -45,7 +45,7 @@ message Command {
 		CMT_REP_CHARGING_DATA_UPLOAD = 0x0009; // 上报电表数据
 		
 		// das->wechat
-		CMT_REP_STOP_CHARGING_COMPLETE = 0x000b; // 充电桩已经结束了充电
+		CMT_REP_CHARGING_STOPPED = 0x000b; // 充电桩已经结束了充电
 		
 		// das <-> web
 		CMT_REQ_PIN = 0x800c; // 得到pin码

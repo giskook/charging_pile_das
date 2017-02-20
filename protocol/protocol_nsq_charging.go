@@ -10,7 +10,7 @@ type ChargingNsqPacket struct {
 	Tid              uint64
 	Serial           uint32
 	Userid           string
-	PinCode          uint16
+	PinCode          string
 	TransactionID    string
 	TranscationValue uint32
 }
@@ -20,7 +20,7 @@ func (p *ChargingNsqPacket) Serialize() []byte {
 	WriteHeader(&writer, 0,
 		PROTOCOL_REQ_CHARGING, p.Tid)
 	base.WriteString(&writer, p.Userid)
-	base.WriteWord(&writer, p.PinCode)
+	base.WriteString(&writer, p.PinCode)
 	base.WriteBcdString(&writer, p.TransactionID)
 	base.WriteDWord(&writer, p.TranscationValue)
 	base.WriteLength(&writer)
@@ -35,7 +35,7 @@ func ParseNsqCharging(cpid uint64, serial uint32, param []*Report.Param) *Chargi
 		Tid:              cpid,
 		Serial:           serial,
 		Userid:           param[0].Strpara,
-		PinCode:          uint16(param[1].Npara),
+		PinCode:          param[1].Strpara,
 		TransactionID:    param[2].Strpara,
 		TranscationValue: uint32(param[3].Npara),
 	}
