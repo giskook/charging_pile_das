@@ -8,5 +8,5 @@ import (
 )
 
 func event_handler_rep_charging(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
-	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeiXin, p.Serialize())
+	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeChat, p.Serialize())
 }

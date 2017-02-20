@@ -1,22 +1,22 @@
 {
-    "Uuid": "das1",
+    "Uuid": "das1_test",
     "Nsq": {
         "Producer": {
             "Addr": "192.168.2.67:4150",
             "Count": 1,
-            "TopicAuth": "tms",
-	    "TopicSetting": "tms",
-	    "TopicPrice": "tms",
-            "TopicStatus": "tss",
-	    "TopicWeiXin":"wxpf",
-	    "TopicNotifyResult":"tds"
+            "TopicAuth": "tms_test",
+	    "TopicSetting": "tms_test",
+	    "TopicPrice": "tms_test",
+            "TopicStatus": "tss_test",
+	    "TopicWeChat":"wxpf_test",
+	    "TopicNotifyResult":"tds_test"
         },
         "Consumer": {
             "Addr": "192.168.2.67:4150",
-            "Topic": "das1",
+            "Topic": "das1_test",
             "Channels": [
-                "das11_ch",
-                "das11_ch"
+                "das1_test1_ch",
+                "das1_test1_ch"
             ]
         },
 
@@ -24,8 +24,8 @@
             "Addr": "192.168.2.67:4150",
             "Topic": "notify",
             "Channels": [
-                "das1_ch",
-                "das1_ch"
+                "das1_test_ch",
+                "das1_test_ch"
             ]
         }
     },

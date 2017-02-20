@@ -12,7 +12,7 @@ type ProducerConf struct {
 	TopicSetting      string
 	TopicPrice        string
 	TopicStatus       string
-	TopicWeiXin       string
+	TopicWeChat       string
 	TopicNotifyResult string
 }
 

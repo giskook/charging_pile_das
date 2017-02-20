@@ -12,5 +12,5 @@ func event_handler_rep_charging_started(c *gotcp.Conn, p *pkg.Charging_Pile_Pack
 	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicStatus, p.Serialize())
 
 	rep_charging_started_pkg := p.Packet.(*protocol.ChargingStartedPacket)
-	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeiXin, rep_charging_started_pkg.SerializeWeChat())
+	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeChat, rep_charging_started_pkg.SerializeWeChat())
 }

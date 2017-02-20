@@ -9,7 +9,7 @@ import (
 
 func event_handler_rep_stop_charging(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
 	//stop_charging_pkg := p.Packet.(*protocol.StopChargingPacket)
-	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeiXin, p.Serialize())
+	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeChat, p.Serialize())
 	//	connection := c.GetExtraData().(*conn.Conn)
 	//	status := &Report.ChargingPileStatus{
 	//		DasUuid:   conf.GetConf().Uuid,
