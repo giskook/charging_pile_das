@@ -27,7 +27,7 @@ func (p *ChargingStoppedPacket) Serialize() []byte {
 		Cpid:          p.Tid,
 		Status:        uint32(PROTOCOL_CHARGING_PILE_IDLE),
 		Timestamp:     p.Timestamp,
-		AmmeterNumber: p.EndMeterReading,
+		AmmeterNumber: float32(p.EndMeterReading) / 10.0,
 		Id:            p.DBID,
 		StationId:     p.StationID,
 	}

@@ -13,8 +13,8 @@ type ChargingUploadPacket struct {
 	MeterReading  uint32
 	Power         uint16
 	Status        uint8
-	RealV         uint32
-	RealI         uint32
+	RealV         float32
+	RealI         float32
 	StationID     uint32
 	DBID          uint32
 	Timestamp     uint64
@@ -32,7 +32,7 @@ func (p *ChargingUploadPacket) Serialize() []byte {
 		RealTimeCurrent:    p.RealI,
 		RealTimeVoltage:    p.RealV,
 		CurrentOrderNumber: p.TransactionID,
-		AmmeterNumber:      p.MeterReading,
+		AmmeterNumber:      float32(p.MeterReading) / 10.0,
 	}
 
 	data, _ := proto.Marshal(status)
@@ -59,8 +59,8 @@ func ParseChargingUpload(buffer []byte, station_id uint32, id uint32, transactio
 		MeterReading:  meter_reading,
 		Power:         power,
 		Status:        status,
-		RealV:         uint32(va+vb+vc) * 577, // 577 == 1.732/3*1000
-		RealI:         uint32(ia+ib+ic) * 577,
+		RealV:         float32(va+vb+vc) * 0.577, // 0.577 == 1.732/3
+		RealI:         float32(ia+ib+ic) * 0.577,
 		StationID:     station_id,
 		DBID:          id,
 		Timestamp:     _time,

@@ -26,8 +26,8 @@ message ChargingPileStatus{
 	uint32 electricCurrentOutput = 14;
 	//枪个数
 	uint32 gunNumber = 15;
-	//电表读数 uint32 单位0.1度
-	uint32 ammeterNumber = 16;
+	//电表读数 uint32 单位 度
+	float ammeterNumber = 16;
 	//充电桩编码 车位号
 	uint32 code = 17;
 	//当前订单的订单号 30位（14位日期+16为cpid）
@@ -37,8 +37,8 @@ message ChargingPileStatus{
 	// 波特率 0:9600,1:14400,2:19200,3:38400,4:576005,5:115200 
 	uint32	baudRate = 20;
 	uint64 Timestamp = 21;
-	// 实时电流 0.1安 * 1000
-	uint32 RealTimeCurrent = 22;
+	// 实时电流 安
+	float RealTimeCurrent = 22;
 	// 实时电压 1福特 * 1000
-	uint32 RealTimeVoltage = 23; 
+	float RealTimeVoltage = 23; 
 }
