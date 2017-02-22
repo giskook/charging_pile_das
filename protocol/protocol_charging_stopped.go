@@ -17,19 +17,24 @@ type ChargingStoppedPacket struct {
 	TransactionID   string
 	Timestamp       uint64
 
+	StartTime         uint32
+	StartMeterReading uint32
+
 	DBID      uint32
 	StationID uint32
 }
 
 func (p *ChargingStoppedPacket) Serialize() []byte {
 	status := &Report.ChargingPileStatus{
-		DasUuid:         p.Uuid,
-		Cpid:            p.Tid,
-		Status:          uint32(PROTOCOL_CHARGING_PILE_IDLE),
-		Timestamp:       p.Timestamp,
-		EndMeterReading: float32(p.EndMeterReading) / 10.0,
-		Id:              p.DBID,
-		StationId:       p.StationID,
+		DasUuid:          p.Uuid,
+		Cpid:             p.Tid,
+		Status:           uint32(PROTOCOL_CHARGING_PILE_IDLE),
+		Timestamp:        p.Timestamp,
+		EndMeterReading:  float32(p.EndMeterReading) / 10.0,
+		ChargingCapacity: float32(p.EndMeterReading-p.StartMeterReading) / 10.0,
+		ChargingDuration: uint32(p.Timestamp) - p.StartTime,
+		Id:               p.DBID,
+		StationId:        p.StationID,
 	}
 
 	data, _ := proto.Marshal(status)
@@ -56,7 +61,7 @@ func (p *ChargingStoppedPacket) SerializeWeChat() []byte {
 	return data
 }
 
-func ParseChargingStopped(buffer []byte, station_id uint32, id uint32) *ChargingStoppedPacket {
+func ParseChargingStopped(buffer []byte, station_id uint32, id uint32, start_time uint32, start_meter_reading uint32) *ChargingStoppedPacket {
 	reader, _, _, tid := ParseHeader(buffer)
 	stop_reason, _ := reader.ReadByte()
 	end_meter_readging := base.ReadDWord(reader)
@@ -74,6 +79,9 @@ func ParseChargingStopped(buffer []byte, station_id uint32, id uint32) *Charging
 		StopTime:        stop_time,
 		TransactionID:   transaction_id,
 		Timestamp:       time_stamp,
+
+		StartTime:         start_time,
+		StartMeterReading: start_meter_reading,
 
 		DBID:      id,
 		StationID: station_id,

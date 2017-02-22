@@ -90,7 +90,7 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_STARTED, p), nil
 
 		case protocol.PROTOCOL_REP_CHARGING_DATA_UPLOAD:
-			p := protocol.ParseChargingUpload(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID, smconn.Charging_Pile.TransactionID)
+			p := protocol.ParseChargingUpload(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID, smconn.Charging_Pile.TransactionID, smconn.Charging_Pile.StartTime, smconn.Charging_Pile.StartMeterReading)
 			smconn.ReadMore = false
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_DATA_UPLOAD, p), nil
@@ -118,6 +118,11 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			smconn.ReadMore = false
 
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING, p), nil
+		case protocol.PROTOCOL_REP_CHARGING_STOPPED:
+			p := protocol.ParseChargingStopped(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID, smconn.Charging_Pile.StartTime, smconn.Charging_Pile.StartMeterReading)
+			smconn.ReadMore = false
+
+			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_STOPPED, p), nil
 
 		case protocol.PROTOCOL_ILLEGAL:
 			smconn.ReadMore = true

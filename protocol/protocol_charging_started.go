@@ -29,6 +29,9 @@ func (p *ChargingStartedPacket) Serialize() []byte {
 		StartMeterReading: float32(p.StartMeterReading) / 10.0, // protocol in charge pile is 0.1 degree
 		StartTime:         p.Timestamp,
 		Timestamp:         p.Timestamp,
+		ChargingDuration:  0,
+		ChargingCapacity:  0.0,
+		ChargingCost:      0.0,
 		Id:                p.DBID,
 		StationId:         p.StationID,
 	}
