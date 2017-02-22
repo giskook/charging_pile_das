@@ -2,43 +2,57 @@ syntax="proto3";
 package Report;
 
 message ChargingPileStatus{
+	// 通信相关
 	string das_uuid = 1;
 	uint64 cpid = 2;
-	uint32 status = 3; 
-	uint32 ChargingDuration = 4;
-	uint32 ChargingCapacity = 5;
-	uint32 ChargingPrice = 6;
-	//id
-	uint32 id = 7;
-	//所属充电站id
-	uint32 stationId = 8;
-	//终端类型id
-	uint32 terminalTypeId = 9;
-	//额定功率 单位：KW
-	double ratedPower = 10;
-	//电流类型 0：交流，1：直流 
-	uint32 electricCurrentType = 11;
-	//输入电压 单位：伏特
-	uint32 voltageInput = 12;
-	//输出电压 单位：伏特
-	uint32 voltageOutput = 13;
-	//输出电流 单位：安培
-	uint32 electricCurrentOutput = 14;
-	//枪个数
-	uint32 gunNumber = 15;
-	//电表读数 uint32 单位 度
-	float ammeterNumber = 16;
-	//充电桩编码 车位号
-	uint32 code = 17;
-	//当前订单的订单号 30位（14位日期+16为cpid）
-	string currentOrderNumber = 18;
-	// 接口 0:RS232,1:RS485,2:CAN,3:USB,4:RJ45,5:RS232(DEBUG)
-	uint32 interfaceType = 19; 
-	// 波特率 0:9600,1:14400,2:19200,3:38400,4:576005,5:115200 
-	uint32	baudRate = 20;
-	uint64 Timestamp = 21;
+	uint64 Timestamp = 3;
+	// --------------  状态相关 ------------ 
+	// 充电桩状态 0 可用 !0不可用
+	uint32 status = 4; 
 	// 实时电流 安
-	float RealTimeCurrent = 22;
-	// 实时电压 1福特 * 1000
-	float RealTimeVoltage = 23; 
+	float RealTimeCurrent = 5;
+	// 实时电压 1福特 
+	float RealTimeVoltage = 6 ; 
+	// --------------  订单相关 ------------ 
+	// 当前订单的订单号 30位（14位日期+16为cpid）
+	string currentOrderNumber = 7;
+	// 充电时长 单位 秒
+	uint32 ChargingDuration = 8;
+	// 充电电量 单位 度
+	float ChargingCapacity = 9;
+	// 充电价格 单位 元
+	float ChargingCost = 10;
+	// 充电起始时间 1970流失的秒数
+	uint64 StartTime = 11;
+	// 充电结束时间 1970流失的秒数
+	uint64 EndTime = 12;
+	// 充电起始电表读数 单位度
+	float StartMeterReading = 13;
+	// 充电终止电表读数 单位度
+	float EndMeterReading = 14;
+	// --------------  属性相关 ------------ 
+	//id
+	uint32 id = 15;
+	//所属充电站id
+	uint32 stationId = 16;
+	//终端类型id
+	uint32 terminalTypeId = 17;
+	//额定功率 单位：KW
+	double ratedPower = 18;
+	//电流类型 0：交流，1：直流 
+	uint32 electricCurrentType = 19;
+	//输入电压 单位：伏特
+	uint32 voltageInput = 20;
+	//输出电压 单位：伏特
+	uint32 voltageOutput = 21;
+	//输出电流 单位：安培
+	uint32 electricCurrentOutput = 22;
+	//枪个数
+	uint32 gunNumber = 23;
+	//充电桩编码 车位号
+	uint32 code = 24;
+	// 接口 0:RS232,1:RS485,2:CAN,3:USB,4:RJ45,5:RS232(DEBUG)
+	uint32 interfaceType = 25; 
+	// 波特率 0:9600,1:14400,2:19200,3:38400,4:576005,5:115200 
+	uint32	baudRate = 26;
 }

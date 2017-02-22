@@ -32,7 +32,7 @@ func (p *ChargingUploadPacket) Serialize() []byte {
 		RealTimeCurrent:    p.RealI,
 		RealTimeVoltage:    p.RealV,
 		CurrentOrderNumber: p.TransactionID,
-		AmmeterNumber:      float32(p.MeterReading) / 10.0,
+		EndMeterReading:    float32(p.MeterReading) / 10.0,
 	}
 
 	data, _ := proto.Marshal(status)

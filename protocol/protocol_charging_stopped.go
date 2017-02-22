@@ -23,13 +23,13 @@ type ChargingStoppedPacket struct {
 
 func (p *ChargingStoppedPacket) Serialize() []byte {
 	status := &Report.ChargingPileStatus{
-		DasUuid:       p.Uuid,
-		Cpid:          p.Tid,
-		Status:        uint32(PROTOCOL_CHARGING_PILE_IDLE),
-		Timestamp:     p.Timestamp,
-		AmmeterNumber: float32(p.EndMeterReading) / 10.0,
-		Id:            p.DBID,
-		StationId:     p.StationID,
+		DasUuid:         p.Uuid,
+		Cpid:            p.Tid,
+		Status:          uint32(PROTOCOL_CHARGING_PILE_IDLE),
+		Timestamp:       p.Timestamp,
+		EndMeterReading: float32(p.EndMeterReading) / 10.0,
+		Id:              p.DBID,
+		StationId:       p.StationID,
 	}
 
 	data, _ := proto.Marshal(status)

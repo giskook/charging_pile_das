@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"strconv"
+	"time"
 )
 
 func ReadWord(reader *bytes.Reader) uint16 {
@@ -121,9 +122,9 @@ func WriteBcdString(writer *bytes.Buffer, str string) {
 
 func ReadBcdTime(reader *bytes.Reader) uint64 {
 	bcd_time_string := ReadBcdString(reader, 6)
-	bcd_time, _ := strconv.ParseUint(bcd_time_string, 10, 64)
+	_time, _ := time.Parse("20060102150405", "20"+bcd_time_string)
 
-	return bcd_time
+	return uint64(_time.Unix())
 }
 
 func WriteBcdCpid(writer *bytes.Buffer, cpid uint64) {
