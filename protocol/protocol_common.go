@@ -8,19 +8,22 @@ import (
 )
 
 const (
-	PROTOCOL_START_FLAG             byte   = 0xfe
-	PROTOCOL_END_FLAG               byte   = 0xce
-	CHARGING_PILE_OFF_LINE          byte   = 252
-	CHARGING_PILE_ON_LINE           byte   = 251
-	PROTOCOL_COMMON_LEN             uint16 = 16
-	PROTOCOL_MIN_LEN                uint16 = 16
-	PROTOCOL_MAX_LEN                uint16 = 1024
-	PROTOCOL_TIME_BCD_LEN           uint8  = 6
-	PROTOCOL_TRANSACTION_BCD_LEN    uint8  = 15
-	PROTOCOL_USERID_LEN             uint8  = 16
-	PROTOCOL_CHARGING_PILE_IDLE     uint8  = 0
-	PROTOCOL_CHARGING_PILE_CHARGING uint8  = 1
-	PROTOCOL_PINCODE_LEN            uint8  = 2
+	PROTOCOL_START_FLAG          byte   = 0xfe
+	PROTOCOL_END_FLAG            byte   = 0xce
+	CHARGING_PILE_OFF_LINE       byte   = 252
+	CHARGING_PILE_ON_LINE        byte   = 251
+	PROTOCOL_COMMON_LEN          uint16 = 16
+	PROTOCOL_MIN_LEN             uint16 = 16
+	PROTOCOL_MAX_LEN             uint16 = 1024
+	PROTOCOL_TIME_BCD_LEN        uint8  = 6
+	PROTOCOL_TRANSACTION_BCD_LEN uint8  = 15
+	PROTOCOL_USERID_LEN          uint8  = 16
+	PROTOCOL_PINCODE_LEN         uint8  = 2
+
+	PROTOCOL_CHARGE_PILE_STATUS_IDLE     uint8 = 0
+	PROTOCOL_CHARGE_PILE_STATUS_CHARGING uint8 = 1
+	PROTOCOL_CHARGE_PILE_STATUS_STARTED  uint8 = 100
+	PROTOCOL_CHARGE_PILE_STATUS_STOPPED  uint8 = 101
 
 	PROTOCOL_ILLEGAL   uint16 = 0
 	PROTOCOL_HALF_PACK uint16 = 255

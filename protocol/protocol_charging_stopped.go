@@ -28,7 +28,7 @@ func (p *ChargingStoppedPacket) Serialize() []byte {
 	status := &Report.ChargingPileStatus{
 		DasUuid:          p.Uuid,
 		Cpid:             p.Tid,
-		Status:           uint32(PROTOCOL_CHARGING_PILE_IDLE),
+		Status:           uint32(PROTOCOL_CHARGE_PILE_STATUS_STOPPED),
 		Timestamp:        p.Timestamp,
 		EndMeterReading:  float32(p.EndMeterReading) / 10.0,
 		ChargingCapacity: float32(p.EndMeterReading-p.StartMeterReading) / 10.0,

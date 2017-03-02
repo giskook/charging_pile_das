@@ -20,39 +20,45 @@ message ChargingPileStatus{
 	uint32 ChargingDuration = 8;
 	// 充电电量 单位 度
 	float ChargingCapacity = 9;
-	// 充电价格 单位 元
+	// 充电花费(包含服务费) 单位 元
 	float ChargingCost = 10;
+	// 充电花费(不包含服务费) 单位 元
+	float ChargingCostE = 11;
 	// 充电起始时间 1970流失的秒数
-	uint64 StartTime = 11;
+	uint64 StartTime = 12;
 	// 充电结束时间 1970流失的秒数
-	uint64 EndTime = 12;
+	uint64 EndTime = 13;
 	// 充电起始电表读数 单位度
-	float StartMeterReading = 13;
+	float StartMeterReading = 14;
 	// 充电终止电表读数 单位度
-	float EndMeterReading = 14;
+	float EndMeterReading = 15;
 	// --------------  属性相关 ------------ 
 	//id
-	uint32 id = 15;
+	uint32 id = 16;
 	//所属充电站id
-	uint32 stationId = 16;
+	uint32 stationId = 17;
 	//终端类型id
-	uint32 terminalTypeId = 17;
+	uint32 terminalTypeId = 18;
 	//额定功率 单位：KW
-	double ratedPower = 18;
+	float ratedPower = 19;
 	//电流类型 0：交流，1：直流 
-	uint32 electricCurrentType = 19;
+	uint32 electricCurrentType = 20;
 	//输入电压 单位：伏特
-	uint32 voltageInput = 20;
+	uint32 voltageInput = 21;
 	//输出电压 单位：伏特
-	uint32 voltageOutput = 21;
+	uint32 voltageOutput = 22;
 	//输出电流 单位：安培
-	uint32 electricCurrentOutput = 22;
+	uint32 electricCurrentOutput = 23;
 	//枪个数
-	uint32 gunNumber = 23;
+	uint32 gunNumber = 24;
 	//充电桩编码 车位号
-	uint32 code = 24;
+	uint32 code = 25;
 	// 接口 0:RS232,1:RS485,2:CAN,3:USB,4:RJ45,5:RS232(DEBUG)
-	uint32 interfaceType = 25; 
+	uint32 interfaceType = 26; 
 	// 波特率 0:9600,1:14400,2:19200,3:38400,4:576005,5:115200 
-	uint32	baudRate = 26;
+	uint32	baudRate = 27;
+	/** 认证模式： 1 表示使用 pin 码， 0 表示不使用 pin 码； */
+	uint32 lockMode = 28;
+	/** 0 表示正常模式 开启充电锁住枪头 APP或者pin码结束充电 才能拔出枪头(车端拔出 仍然处于充电状态)；1 表示死锁模式 枪头一直处于锁住状态 结束充电也无法拔出枪头；2 表示停止模式 开启充电锁住枪头 车端拔出 会立刻停止充电；*/
+	uint32 authMode = 29;
 }

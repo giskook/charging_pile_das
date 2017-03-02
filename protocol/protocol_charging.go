@@ -55,7 +55,7 @@ func (p *ChargingPacket) SerializeTss() []byte {
 	status := &Report.ChargingPileStatus{
 		DasUuid:            p.Uuid,
 		Cpid:               p.Tid,
-		Status:             uint32(PROTOCOL_CHARGING_PILE_CHARGING),
+		Status:             uint32(PROTOCOL_CHARGE_PILE_STATUS_CHARGING),
 		Timestamp:          p.Timestamp,
 		Id:                 p.DBID,
 		StationId:          p.StationID,

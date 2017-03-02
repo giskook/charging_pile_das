@@ -25,7 +25,7 @@ func (p *ChargingStartedPacket) Serialize() []byte {
 	status := &Report.ChargingPileStatus{
 		DasUuid:           p.Uuid,
 		Cpid:              p.Tid,
-		Status:            uint32(PROTOCOL_CHARGING_PILE_CHARGING),
+		Status:            uint32(PROTOCOL_CHARGE_PILE_STATUS_STARTED),
 		StartMeterReading: float32(p.StartMeterReading) / 10.0, // protocol in charge pile is 0.1 degree
 		StartTime:         p.Timestamp,
 		Timestamp:         p.Timestamp,

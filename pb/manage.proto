@@ -53,6 +53,9 @@ message Command {
 
 		// das -> ?
 		CMT_REP_OFFLINE_DATA = 0x000d; // 上传离线数据
+		
+		// tss->wechat
+		CMT_NOTIFY_TRANSCATION = 0x0100; // tss 通知 wechat 开始退款
 	}
 	CommandType type = 1; // 命令类型
 	string  uuid = 2; // 发起消息的服务器id

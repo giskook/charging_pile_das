@@ -24,6 +24,7 @@ func (p *PriceNsqPacket) Serialize() []byte {
 	var writer bytes.Buffer
 	WriteHeader(&writer, 0,
 		PROTOCOL_REP_PRICE, p.Tid)
+	writer.WriteByte(byte(len(p.Prices)))
 	for _, price := range p.Prices {
 		writer.WriteByte(price.Start_hour)
 		writer.WriteByte(price.Start_min)
