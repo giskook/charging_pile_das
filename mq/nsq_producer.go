@@ -23,7 +23,7 @@ func NewNsqProducer(config *conf.ProducerConf) *NsqProducer {
 
 func (s *NsqProducer) Send(topic string, value []byte) error {
 	err := s.producer.PublishAsync(topic, value, nil, nil)
-	log.Printf("<OUT_NSQ> topic %s \n", topic)
+	log.Printf("<OUT_NSQ> topic %s %s\n", topic, value)
 	if err != nil {
 		log.Println("error occur")
 		log.Println(err.Error())

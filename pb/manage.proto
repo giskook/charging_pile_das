@@ -43,6 +43,7 @@ message Command {
 		
 		// das->wechat
 		CMT_REP_CHARGING_DATA_UPLOAD = 0x0009; // 上报电表数据
+		CMT_REP_CHARGING_COST        = 0x8009; // 下发金额
 		
 		// das->wechat
 		CMT_REP_CHARGING_STOPPED = 0x000b; // 充电桩已经结束了充电

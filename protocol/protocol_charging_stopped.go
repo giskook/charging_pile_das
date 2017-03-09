@@ -1,6 +1,7 @@
 package protocol
 
 import (
+	"bytes"
 	"github.com/giskook/charging_pile_das/base"
 	"github.com/giskook/charging_pile_das/conf"
 	"github.com/giskook/charging_pile_das/pb"
@@ -24,7 +25,7 @@ type ChargingStoppedPacket struct {
 	StationID uint32
 }
 
-func (p *ChargingStoppedPacket) Serialize() []byte {
+func (p *ChargingStoppedPacket) SerializeTss() []byte {
 	status := &Report.ChargingPileStatus{
 		DasUuid:          p.Uuid,
 		Cpid:             p.Tid,
@@ -33,6 +34,7 @@ func (p *ChargingStoppedPacket) Serialize() []byte {
 		EndMeterReading:  float32(p.EndMeterReading) / 10.0,
 		ChargingCapacity: float32(p.EndMeterReading-p.StartMeterReading) / 10.0,
 		ChargingDuration: uint32(p.Timestamp) - p.StartTime,
+		EndTime:          uint64(p.StopTime),
 		Id:               p.DBID,
 		StationId:        p.StationID,
 	}
@@ -40,6 +42,16 @@ func (p *ChargingStoppedPacket) Serialize() []byte {
 	data, _ := proto.Marshal(status)
 
 	return data
+}
+
+func (p *ChargingStoppedPacket) Serialize() []byte {
+	var writer bytes.Buffer
+	WriteHeader(&writer, 0, PROTOCOL_REP_CHARGING_STOPPED_FEEDBACK, p.Tid)
+	base.WriteLength(&writer)
+	base.WriteWord(&writer, CalcCRC(writer.Bytes()[1:], uint16(writer.Len()-1)))
+	writer.WriteByte(PROTOCOL_END_FLAG)
+
+	return writer.Bytes()
 }
 
 func (p *ChargingStoppedPacket) SerializeWeChat() []byte {

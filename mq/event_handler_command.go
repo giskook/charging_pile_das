@@ -13,6 +13,7 @@ func ProcessNsq(socket *NsqSocket, message []byte) {
 		log.Println("unmarshal error")
 	} else {
 		log.Printf("<IN NSQ> %s %d %x\n", command.Uuid, command.Tid, command.Type)
+		log.Println(command.Paras)
 		switch command.Type {
 		case Report.Command_CMT_REP_LOGIN:
 			event_handler_rep_login(socket, command.Tid, command.SerialNumber, command.Paras)
@@ -29,7 +30,9 @@ func ProcessNsq(socket *NsqSocket, message []byte) {
 		case Report.Command_CMT_REQ_STOP_CHARGING:
 			event_handler_req_stop_charging(command.Tid)
 		case Report.Command_CMT_REQ_PIN:
-			event_handler_req_pin(command.Tid)
+			event_handler_req_pin(command.Tid, command.SerialNumber)
+		case Report.Command_CMT_REP_CHARGING_COST:
+			event_handler_rep_charging_cost(command.Tid, command.Paras)
 
 		}
 	}

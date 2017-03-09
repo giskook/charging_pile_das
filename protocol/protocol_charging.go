@@ -70,8 +70,7 @@ func (p *ChargingPacket) SerializeTss() []byte {
 func ParseCharging(buffer []byte, station_id uint32, db_id uint32) *ChargingPacket {
 	reader, _, _, tid := ParseHeader(buffer)
 	serial := base.ReadDWord(reader)
-	userid_len, _ := reader.ReadByte()
-	userid := base.ReadString(reader, userid_len)
+	userid := base.ReadString(reader, PROTOCOL_USERID_LEN)
 	transaction_id := base.ReadBcdString(reader, PROTOCOL_TRANSACTION_BCD_LEN)
 	result, _ := reader.ReadByte()
 	time_stamp_string := base.ReadBcdString(reader, PROTOCOL_TIME_BCD_LEN)

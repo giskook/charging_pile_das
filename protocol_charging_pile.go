@@ -90,6 +90,7 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 			return pkg.New_Charging_Pile_Packet(protocol.PROTOCOL_REP_CHARGING_STARTED, p), nil
 
 		case protocol.PROTOCOL_REP_CHARGING_DATA_UPLOAD:
+			log.Println(smconn.Charging_Pile.TransactionID)
 			p := protocol.ParseChargingUpload(pkgbyte, smconn.Charging_Pile.Station_ID, smconn.Charging_Pile.DB_ID, smconn.Charging_Pile.TransactionID, smconn.Charging_Pile.StartTime, smconn.Charging_Pile.StartMeterReading)
 			smconn.ReadMore = false
 
