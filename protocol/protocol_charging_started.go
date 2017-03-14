@@ -30,7 +30,7 @@ func (p *ChargingStartedPacket) SerializeTss() []byte {
 		Cpid:               p.Tid,
 		Status:             uint32(PROTOCOL_CHARGE_PILE_STATUS_STARTED),
 		StartMeterReading:  float32(p.StartMeterReading) / 10.0, // protocol in charge pile is 0.1 degree
-		StartTime:          p.Timestamp,
+		StartTime:          uint64(p.StartTime),
 		Timestamp:          p.Timestamp,
 		ChargingDuration:   0,
 		ChargingCapacity:   0.0,
