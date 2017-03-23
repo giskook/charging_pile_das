@@ -36,8 +36,8 @@ func (p *ChargingUploadPacket) Serialize() []byte {
 		RealTimeVoltage:    p.RealV,
 		CurrentOrderNumber: p.TransactionID,
 		EndMeterReading:    float32(p.MeterReading) / 10.0,
-		ChargingDuration:   uint32(p.Timestamp) - p.StartTime,
-		ChargingCapacity:   float32(p.MeterReading-p.StartMeterReading) / 10.0,
+		ChargingDuration:   uint32(p.Timestamp),
+		ChargingCapacity:   float32(p.MeterReading) / 10.0,
 	}
 
 	data, _ := proto.Marshal(status)
@@ -64,8 +64,8 @@ func ParseChargingUpload(buffer []byte, station_id uint32, id uint32, transactio
 		MeterReading:      meter_reading,
 		Power:             power,
 		Status:            status,
-		RealV:             float32(va+vb+vc) * 0.577, // 0.577 == 1.732/3
-		RealI:             float32(ia+ib+ic) * 0.577,
+		RealV:             float32(va+vb+vc) * 0.0577, // 0.577 == 1.732/3/10
+		RealI:             float32(ia+ib+ic) * 0.0577,
 		StationID:         station_id,
 		DBID:              id,
 		Timestamp:         _time,

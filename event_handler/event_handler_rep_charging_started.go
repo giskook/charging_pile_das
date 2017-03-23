@@ -16,7 +16,7 @@ func event_handler_rep_charging_started(c *gotcp.Conn, p *pkg.Charging_Pile_Pack
 	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicWeChat, rep_charging_started_pkg.SerializeWeChat())
 	connection := c.GetExtraData().(*conn.Conn)
 	if connection != nil {
-		connection.SendToTerm(p)
+		//connection.SendToTerm(p)
 		connection.Charging_Pile.StartTime = uint32(rep_charging_started_pkg.Timestamp)
 		connection.Charging_Pile.StartMeterReading = rep_charging_started_pkg.StartMeterReading
 		connection.Charging_Pile.TransactionID = rep_charging_started_pkg.TransactionID

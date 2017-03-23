@@ -123,7 +123,9 @@ func WriteBcdString(writer *bytes.Buffer, str string) {
 
 func ReadBcdTime(reader *bytes.Reader) uint64 {
 	bcd_time_string := ReadBcdString(reader, 6)
-	_time, _ := time.Parse("20060102150405", "20"+bcd_time_string)
+	//loc, _ := time.LoadLocation("Asia/Beijing")
+
+	_time, _ := time.ParseInLocation("20060102150405", "20"+bcd_time_string, time.Local)
 	log.Println("---------")
 	log.Println(bcd_time_string)
 	log.Println(_time.Unix())

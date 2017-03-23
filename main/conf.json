@@ -1,40 +1,40 @@
 {
-    "Uuid": "das1_test",
-    "Nsq": {
-        "Producer": {
-            "Addr": "192.168.2.67:4150",
-            "Count": 1,
-            "TopicAuth": "tms_test",
-	    "TopicSetting": "tms_test",
-	    "TopicPrice": "tms_test",
-            "TopicStatus": "tss_test",
-	    "TopicWeChat":"wxpf_test",
-	    "TopicNotifyResult":"tds_test"
-        },
-        "Consumer": {
-            "Addr": "192.168.2.67:4150",
-            "Topic": "das1_test",
-            "Channels": [
-                "das1_test1_ch",
-                "das1_test1_ch"
-            ]
-        },
+	"Uuid": "das1_test",
+		"Nsq": {
+			"Producer": {
+				"Addr": "192.168.2.67:4150",
+				"Count": 1,
+				"TopicAuth": "tms_test",
+				"TopicSetting": "tms_test",
+				"TopicPrice": "tms_test",
+				"TopicStatus": "tss_test",
+				"TopicWeChat":"wxpf_test",
+				"TopicNotifyResult":"tds_test"
+			},
+			"Consumer": {
+				"Addr": "192.168.2.67:4150",
+				"Topic": "das1_test",
+				"Channels": [
+					"das1_test1_ch",
+				"das1_test1_ch"
+					]
+			},
 
-        "ConsumerNotify": {
-            "Addr": "192.168.2.67:4150",
-            "Topic": "notify",
-            "Channels": [
-                "das1_test_ch",
-                "das1_test_ch"
-            ]
-        }
-    },
-    "Server": {
-        "BindPort": "8876",
-        "ReadLimit": 30000,
-        "WriteLimit": 30000,
-        "ConnTimeout": 300,
-        "ConnCheckInterval": 30,
-        "ServerStatistics": 300
-    }
+			"ConsumerNotify": {
+				"Addr": "192.168.2.67:4150",
+				"Topic": "notify",
+				"Channels": [
+					"das1_test_ch",
+				"das1_test_ch"
+					]
+			}
+		},
+		"Server": {
+			"BindPort": "8876",
+			"ReadLimit": 30000,
+			"WriteLimit": 30000,
+			"ConnTimeout": 300,
+			"ConnCheckInterval": 30,
+			"ServerStatistics": 300
+		}
 }

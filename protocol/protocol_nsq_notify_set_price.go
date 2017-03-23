@@ -16,7 +16,7 @@ type NsqNotifySetPricePacket struct {
 func (p *NsqNotifySetPricePacket) Serialize() []byte {
 	var writer bytes.Buffer
 	WriteHeader(&writer, 0,
-		PROTOCOL_REP_NSQ_NOTIFY_SET_PRICE, p.Tid)
+		PROTOCOL_REQ_NSQ_NOTIFY_SET_PRICE, p.Tid)
 	base.WriteDWord(&writer, p.Serial)
 	writer.WriteByte(byte(len(p.Prices)))
 	for _, price := range p.Prices {

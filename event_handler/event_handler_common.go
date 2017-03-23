@@ -80,12 +80,12 @@ func (this *Callback) OnMessage(c *gotcp.Conn, p gotcp.Packet) bool {
 	case protocol.PROTOCOL_REP_PIN:
 		log.Println("on rep pin")
 		event_handler_rep_pin(c, cpd_pkg)
-	case protocol.PROTOCOL_REP_OFFLINE_DATA:
-		log.Println("on rep offline data")
-		event_handler_rep_offline_data(c, cpd_pkg)
 	case protocol.PROTOCOL_REP_GUN_STATUS:
 		log.Println("on rep gun status")
 		event_handler_rep_gun_status(c, cpd_pkg)
+	case protocol.PROTOCOL_REP_UPLOAD_OFFLINE_PACAKGE:
+		log.Println("on rep upload offline ")
+		event_handler_rep_upload_offline_package(c, cpd_pkg)
 	}
 
 	return true
