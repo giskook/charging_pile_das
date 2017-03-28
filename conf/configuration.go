@@ -30,12 +30,13 @@ type NsqConfiguration struct {
 }
 
 type ServerConfiguration struct {
-	BindPort          string
-	ReadLimit         uint16
-	WriteLimit        uint16
-	ConnTimeout       uint16
-	ConnCheckInterval uint16
-	ServerStatistics  uint16
+	BindPort            string
+	ReadLimit           uint16
+	WriteLimit          uint16
+	ConnTimeout         uint16
+	ConnCheckInterval   uint16
+	ServerStatistics    uint16
+	SendHeartAfterLogin uint16
 }
 
 type Configuration struct {

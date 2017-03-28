@@ -14,9 +14,14 @@ func event_handler_login(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
 	login_pkg := p.Packet.(*protocol.LoginPacket)
 	connection.ID = login_pkg.Tid
 	conn.NewConns().SetID(login_pkg.Tid, connection)
+
+	connection.Charging_Pile.Status = login_pkg.Status
+	connection.Charging_Pile.Timestamp = login_pkg.Timestamp
 	if login_pkg.Status == 1 {
-		connection.Charging_Pile.StartTime = login_pkg.StartTime
-		connection.Charging_Pile.StartMeterReading = login_pkg.StartMeterReading
+		connection.Charging_Pile.EndMeterReading = login_pkg.EndMeterReading
+		connection.Charging_Pile.StopTime = login_pkg.StopTime
+		connection.Charging_Pile.TransactionID = login_pkg.TransactionID
 	}
+
 	server.GetServer().MQ.Send(conf.GetConf().Nsq.Producer.TopicAuth, p.Serialize())
 }

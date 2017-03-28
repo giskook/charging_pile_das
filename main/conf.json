@@ -35,6 +35,7 @@
 			"WriteLimit": 30000,
 			"ConnTimeout": 300,
 			"ConnCheckInterval": 30,
-			"ServerStatistics": 300
+			"ServerStatistics": 300,
+			"SendHeartAfterLogin":10
 		}
 }

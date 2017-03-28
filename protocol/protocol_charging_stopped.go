@@ -32,7 +32,7 @@ func (p *ChargingStoppedPacket) SerializeTss() []byte {
 		Status:             uint32(PROTOCOL_CHARGE_PILE_STATUS_STOPPED),
 		Timestamp:          p.Timestamp,
 		EndMeterReading:    float32(p.EndMeterReading) / 10.0,
-		ChargingDuration:   uint32(p.Timestamp),
+		ChargingDuration:   uint32(p.StopTime),
 		ChargingCapacity:   float32(p.EndMeterReading) / 10.0,
 		CurrentOrderNumber: p.TransactionID,
 		EndTime:            uint64(p.StopTime),
