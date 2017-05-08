@@ -5,7 +5,6 @@ import (
 	"github.com/giskook/charging_pile_das/conf"
 	"github.com/giskook/charging_pile_das/pb"
 	"github.com/golang/protobuf/proto"
-	"log"
 )
 
 type LoginPacket struct {
@@ -66,7 +65,6 @@ func (p *LoginPacket) Serialize() []byte {
 
 func ParseLogin(buffer []byte) *LoginPacket {
 	reader, _, _, tid := ParseHeader(buffer)
-	log.Println("--")
 	protocol_version, _ := reader.ReadByte()
 	hardware_version, _ := reader.ReadByte()
 	status, _ := reader.ReadByte()
@@ -75,10 +73,7 @@ func ParseLogin(buffer []byte) *LoginPacket {
 	user_id := base.ReadString(reader, PROTOCOL_USERID_LEN)
 	stop_time := base.ReadDWord(reader)
 	transcation_id := base.ReadBcdString(reader, PROTOCOL_TRANSACTION_BCD_LEN)
-	log.Println(transcation_id)
 	time_stamp := base.ReadBcdTime(reader)
-
-	log.Println(transcation_id)
 
 	return &LoginPacket{
 		Uuid:            conf.GetConf().Uuid,

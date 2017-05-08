@@ -8,9 +8,10 @@ import (
 )
 
 type RepGunStatusPacket struct {
-	Uuid   string
-	Tid    uint64
-	Status uint8
+	Uuid      string
+	Tid       uint64
+	Status    uint8
+	Timestamp uint64
 }
 
 func (p *RepGunStatusPacket) Serialize() []byte {
@@ -34,11 +35,12 @@ func (p *RepGunStatusPacket) Serialize() []byte {
 func ParseRepGunStatus(buffer []byte) *RepGunStatusPacket {
 	reader, _, _, tid := ParseHeader(buffer)
 	status, _ := reader.ReadByte()
-	base.ReadBcdTime(reader)
+	_time := base.ReadBcdTime(reader)
 
 	return &RepGunStatusPacket{
-		Uuid:   conf.GetConf().Uuid,
-		Tid:    tid,
-		Status: status,
+		Uuid:      conf.GetConf().Uuid,
+		Tid:       tid,
+		Status:    status,
+		Timestamp: _time,
 	}
 }

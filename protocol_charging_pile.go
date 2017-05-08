@@ -24,7 +24,7 @@ func (this *Charging_Pile_Protocol) ReadPacket(c *gotcp.Conn) (gotcp.Packet, err
 		if smconn.ReadMore {
 			data := make([]byte, 2048)
 			readLengh, err := tcp_conn.Read(data)
-			log.Printf("<IN>    %x\n", data[0:readLengh])
+			log.Printf("<IN> %x  %x\n", smconn, data[0:readLengh])
 			if err != nil {
 				return nil, err
 			}

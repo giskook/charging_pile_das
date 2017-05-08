@@ -112,8 +112,9 @@ func (c *Conn) checkHeart() {
 			c.writeflag = wflag
 		case <-c.ticker.C:
 			now = time.Now().Unix()
+
 			if now-c.readflag > int64(c.config.ReadLimit) {
-				log.Printf("read limit %x\n", c.ID)
+				log.Printf("read limit %x %d now %d readflag  %d\n", c, c.ID, now, c.readflag)
 				return
 			}
 			//			if now-c.writeflag > int64(c.config.WriteLimit) {
@@ -121,7 +122,7 @@ func (c *Conn) checkHeart() {
 			//				return
 			//			}
 			if c.Status == ConnUnauth {
-				log.Printf("unauth's gateway gatewayid %x\n", c.ID)
+				log.Printf("unauth's cp %x %d\n", c, c.ID)
 				return
 			}
 		case <-c.closeChan:
