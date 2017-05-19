@@ -39,10 +39,16 @@ type ServerConfiguration struct {
 	SendHeartAfterLogin uint16
 }
 
+type EventLimit struct {
+	SendChargeStoppedThreshold uint8
+	SendChargeStoppedDelay     uint8
+}
+
 type Configuration struct {
 	Uuid   string
 	Nsq    *NsqConfiguration
 	Server *ServerConfiguration
+	Limit  *EventLimit
 }
 
 var G_conf *Configuration

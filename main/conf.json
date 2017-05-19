@@ -31,11 +31,16 @@
 		},
 		"Server": {
 			"BindPort": "8876",
-			"ReadLimit": 30000,
-			"WriteLimit": 30000,
+			"ReadLimit": 60,
+			"WriteLimit": 60,
 			"ConnTimeout": 300,
-			"ConnCheckInterval": 30,
+			"ConnCheckInterval": 10,
 			"ServerStatistics": 300,
 			"SendHeartAfterLogin":10
+		},
+		"Limit":{
+			"SendChargeStoppedThreshold":3,
+			"SendChargeStoppedDelay":5
 		}
+
 }
