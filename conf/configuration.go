@@ -42,6 +42,7 @@ type ServerConfiguration struct {
 type EventLimit struct {
 	SendChargeStoppedThreshold uint8
 	SendChargeStoppedDelay     uint8
+	SendHeartThreshold         uint8
 }
 
 type Configuration struct {
