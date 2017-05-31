@@ -19,4 +19,6 @@ type Charging_Pile struct {
 	EndMeterReading uint32
 	StopTime        uint32
 	Timestamp       uint64
+
+	StopSendTime uint32
 }
