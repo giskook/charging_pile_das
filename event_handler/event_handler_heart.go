@@ -1,6 +1,7 @@
 package event_handler
 
 import (
+	"github.com/giskook/charging_pile_das/base"
 	"github.com/giskook/charging_pile_das/conf"
 	"github.com/giskook/charging_pile_das/conn"
 	"github.com/giskook/charging_pile_das/pb"
@@ -15,6 +16,7 @@ func event_handler_heart(c *gotcp.Conn, p *pkg.Charging_Pile_Packet) {
 	connection := c.GetExtraData().(*conn.Conn)
 	if connection != nil {
 		connection.SendToTerm(p)
+		connection.Charging_Pile.StatusEx = base.STATUS_IDLE
 	}
 	heart_pkg := p.Packet.(*protocol.HeartPacket)
 	if connection.Charging_Pile.Status == 1 { // 1 means re on line

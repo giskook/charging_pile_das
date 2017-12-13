@@ -1,6 +1,7 @@
 package event_handler
 
 import (
+	"github.com/giskook/charging_pile_das/base"
 	"github.com/giskook/charging_pile_das/conf"
 	"github.com/giskook/charging_pile_das/conn"
 	"github.com/giskook/charging_pile_das/pkg"
@@ -20,5 +21,6 @@ func event_handler_rep_charging_started(c *gotcp.Conn, p *pkg.Charging_Pile_Pack
 		connection.Charging_Pile.StartTime = uint32(rep_charging_started_pkg.Timestamp)
 		connection.Charging_Pile.StartMeterReading = rep_charging_started_pkg.StartMeterReading
 		connection.Charging_Pile.TransactionID = rep_charging_started_pkg.TransactionID
+		connection.Charging_Pile.StatusEx = base.STATUS_CHARGING
 	}
 }

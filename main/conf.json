@@ -40,7 +40,8 @@
 		},
 		"Limit":{
 			"SendChargeStoppedThreshold":3,
-			"SendChargeStoppedDelay":5
+			"SendChargeStoppedDelay":5, 
+			"SendHeartThreshold":5
 		}
 
 }
