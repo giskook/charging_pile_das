@@ -25,6 +25,8 @@ type Charging_Pile struct {
 	StopTime        uint32
 	Timestamp       uint64
 
+	RecvLastChagingTime uint64 // in case of the charge stopped follow the charging protocol but nsq can not insure the order.so if the two packets come together deny send charge stopped
+
 	StopSendTime uint32
 
 	StatusEx uint8
